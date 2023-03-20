@@ -14,6 +14,9 @@
 		43AF0A6329C909540032A3F0 /* GpsPollingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A6229C909540032A3F0 /* GpsPollingTests.swift */; };
 		43AF0A6D29C909540032A3F0 /* GpsPollingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A6C29C909540032A3F0 /* GpsPollingUITests.swift */; };
 		43AF0A6F29C909540032A3F0 /* GpsPollingUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A6E29C909540032A3F0 /* GpsPollingUITestsLaunchTests.swift */; };
+		43AF0A7D29C90A930032A3F0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AF0A7C29C90A930032A3F0 /* CoreLocation.framework */; };
+		43AF0A7E29C90AD40032A3F0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AF0A7C29C90A930032A3F0 /* CoreLocation.framework */; };
+		43AF0A7F29C90AD50032A3F0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AF0A7C29C90A930032A3F0 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +47,7 @@
 		43AF0A6829C909540032A3F0 /* GpsPollingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GpsPollingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		43AF0A6C29C909540032A3F0 /* GpsPollingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpsPollingUITests.swift; sourceTree = "<group>"; };
 		43AF0A6E29C909540032A3F0 /* GpsPollingUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpsPollingUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		43AF0A7C29C90A930032A3F0 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43AF0A7D29C90A930032A3F0 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43AF0A7E29C90AD40032A3F0 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43AF0A7F29C90AD50032A3F0 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +85,7 @@
 				43AF0A6129C909540032A3F0 /* GpsPollingTests */,
 				43AF0A6B29C909540032A3F0 /* GpsPollingUITests */,
 				43AF0A4F29C909520032A3F0 /* Products */,
+				43AF0A7B29C90A930032A3F0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -125,6 +133,14 @@
 				43AF0A6E29C909540032A3F0 /* GpsPollingUITestsLaunchTests.swift */,
 			);
 			path = GpsPollingUITests;
+			sourceTree = "<group>";
+		};
+		43AF0A7B29C90A930032A3F0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				43AF0A7C29C90A930032A3F0 /* CoreLocation.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -420,6 +436,9 @@
 				DEVELOPMENT_TEAM = 4U9P35TVXY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GpsPolling/Info.plist;
+				INFOPLIST_KEY_NSLocationUsageDescription = "Skywire needs to track position of the aircraft to properly collect the data.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This way Skywire app can track your flight data.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -449,6 +468,9 @@
 				DEVELOPMENT_TEAM = 4U9P35TVXY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GpsPolling/Info.plist;
+				INFOPLIST_KEY_NSLocationUsageDescription = "Skywire needs to track position of the aircraft to properly collect the data.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This way Skywire app can track your flight data.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

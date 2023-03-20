@@ -11,6 +11,8 @@ import CoreLocation
 class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var locationManager = CLLocationManager()
     @Published var csvData: String = "Timestamp,Latitude,Longitude,Altitude\n"
+    @Published var showAlert = false
+    @Published var alertMessage = ""
     
     override init() {
         super.init()
@@ -23,6 +25,16 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             self.saveLocationData()
         }
     }
+    
+    func showSuccessAlert() {
+            alertMessage = "File saved successfully."
+            showAlert = true
+    }
+//
+//    func showFailAlert(error: Error) {
+//            alertMessage = "Error saving file! Error: \(error)"
+//            showAlert = true
+//    }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
@@ -58,8 +70,10 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             do {
                 try csvData.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
                 print("CSV file saved: \(fileURL)")
+                showSuccessAlert()
             } catch {
                 print("Failed to save CSV file: \(error)")
+//                showFailAlert(error: error)
             }
         }
     }
@@ -112,6 +126,9 @@ struct ContentView: View {
                 }
                 .padding(.horizontal)
             }
+        }
+        .alert(isPresented: $locationViewModel.showAlert) {
+            Alert(title: Text("Success"), message: Text(locationViewModel.alertMessage), dismissButton: .default(Text("OK")))
         }
     }
 }

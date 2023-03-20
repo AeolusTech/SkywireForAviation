@@ -52,7 +52,7 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         let fileName = "LocationData_\(dateString).csv"
         
         let fileManager = FileManager.default
-        if let documentsURL = fileManager.urls(for: .downloadsDirectory, in: .userDomainMask).first {
+        if let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
             let fileURL = documentsURL.appendingPathComponent(fileName)
             
             do {

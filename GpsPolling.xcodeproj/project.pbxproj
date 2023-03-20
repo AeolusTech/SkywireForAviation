@@ -437,6 +437,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GpsPolling/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSLocationUsageDescription = "Skywire needs to track position of the aircraft to properly collect the data.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This way Skywire app can track your flight data.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -469,6 +471,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GpsPolling/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSLocationUsageDescription = "Skywire needs to track position of the aircraft to properly collect the data.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This way Skywire app can track your flight data.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

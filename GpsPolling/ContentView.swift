@@ -34,7 +34,7 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func saveLocationData() {
-        if let location = locationManager.location {
+        if recording, let location = locationManager.location {
             let timestamp = Date().timeIntervalSince1970
             let latitude = location.coordinate.latitude
             let longitude = location.coordinate.longitude
@@ -46,15 +46,33 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func saveCSVDataToFile() {
-        let fileName = "LocationData.csv"
-        let path = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd_HHmmss"
+        let dateString = dateFormatter.string(from: Date())
+        let fileName = "LocationData_\(dateString).csv"
         
-        do {
-            try csvData.write(to: path!, atomically: true, encoding: String.Encoding.utf8)
-            print("CSV file saved: \(String(describing: path))")
-        } catch {
-            print("Failed to save CSV file: \(error)")
+        let fileManager = FileManager.default
+        if let documentsURL = fileManager.urls(for: .downloadsDirectory, in: .userDomainMask).first {
+            let fileURL = documentsURL.appendingPathComponent(fileName)
+            
+            do {
+                try csvData.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
+                print("CSV file saved: \(fileURL)")
+            } catch {
+                print("Failed to save CSV file: \(error)")
+            }
         }
+    }
+    
+    @Published var recording = false
+
+    func startRecording() {
+        recording = true
+    }
+
+    func stopRecording() {
+        recording = false
+        saveCSVDataToFile()
     }
 }
 
@@ -62,11 +80,39 @@ struct ContentView: View {
     @StateObject private var locationViewModel = LocationViewModel()
     
     var body: some View {
-        Text("Location Tracker")
-            .padding()
-            .onDisappear {
-                locationViewModel.saveCSVDataToFile()
+        VStack {
+            Text("Location Tracker")
+                .font(.largeTitle)
+                .padding()
+            
+            if !locationViewModel.recording {
+                Button(action: {
+                    locationViewModel.startRecording()
+                }) {
+                    Text("Record position")
+                        .font(.title)
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        .background(Color.green)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .padding(.horizontal)
+            } else {
+                Button(action: {
+                    locationViewModel.stopRecording()
+                }) {
+                    Text("Stop recording")
+                        .font(.title)
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        .background(Color.red)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .padding(.horizontal)
             }
+        }
     }
 }
 

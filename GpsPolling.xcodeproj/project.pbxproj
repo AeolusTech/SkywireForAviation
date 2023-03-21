@@ -17,6 +17,8 @@
 		43AF0A7D29C90A930032A3F0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AF0A7C29C90A930032A3F0 /* CoreLocation.framework */; };
 		43AF0A7E29C90AD40032A3F0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AF0A7C29C90A930032A3F0 /* CoreLocation.framework */; };
 		43AF0A7F29C90AD50032A3F0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AF0A7C29C90A930032A3F0 /* CoreLocation.framework */; };
+		43AF0A8829C9B1520032A3F0 /* RecordedFilesview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A8729C9B1520032A3F0 /* RecordedFilesview.swift */; };
+		43AF0A8A29C9B1F40032A3F0 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A8929C9B1F40032A3F0 /* MainTabView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		43AF0A6C29C909540032A3F0 /* GpsPollingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpsPollingUITests.swift; sourceTree = "<group>"; };
 		43AF0A6E29C909540032A3F0 /* GpsPollingUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpsPollingUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		43AF0A7C29C90A930032A3F0 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		43AF0A8729C9B1520032A3F0 /* RecordedFilesview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordedFilesview.swift; sourceTree = "<group>"; };
+		43AF0A8929C9B1F40032A3F0 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,8 @@
 				43AF0A5329C909520032A3F0 /* ContentView.swift */,
 				43AF0A5529C909540032A3F0 /* Assets.xcassets */,
 				43AF0A5729C909540032A3F0 /* Preview Content */,
+				43AF0A8729C9B1520032A3F0 /* RecordedFilesview.swift */,
+				43AF0A8929C9B1F40032A3F0 /* MainTabView.swift */,
 			);
 			path = GpsPolling;
 			sourceTree = "<group>";
@@ -273,8 +279,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43AF0A8829C9B1520032A3F0 /* RecordedFilesview.swift in Sources */,
 				43AF0A5429C909520032A3F0 /* ContentView.swift in Sources */,
 				43AF0A5229C909520032A3F0 /* GpsPollingApp.swift in Sources */,
+				43AF0A8A29C9B1F40032A3F0 /* MainTabView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,13 +1,13 @@
 //
-//  GpsPollingUITestsLaunchTests.swift
-//  GpsPollingUITests
+//  SkywireUITestsLaunchTests.swift
+//  SkywireUITests
 //
 //  Created by Kamil Kuczaj on 20/03/2023.
 //
 
 import XCTest
 
-final class GpsPollingUITestsLaunchTests: XCTestCase {
+final class SkywireUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

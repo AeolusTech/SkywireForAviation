@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		43AF0A5229C909520032A3F0 /* GpsPollingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A5129C909520032A3F0 /* GpsPollingApp.swift */; };
+		43AF0A5229C909520032A3F0 /* SkywireApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A5129C909520032A3F0 /* SkywireApp.swift */; };
 		43AF0A5429C909520032A3F0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A5329C909520032A3F0 /* ContentView.swift */; };
 		43AF0A5629C909540032A3F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43AF0A5529C909540032A3F0 /* Assets.xcassets */; };
 		43AF0A5929C909540032A3F0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43AF0A5829C909540032A3F0 /* Preview Assets.xcassets */; };
-		43AF0A6329C909540032A3F0 /* GpsPollingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A6229C909540032A3F0 /* GpsPollingTests.swift */; };
-		43AF0A6D29C909540032A3F0 /* GpsPollingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A6C29C909540032A3F0 /* GpsPollingUITests.swift */; };
-		43AF0A6F29C909540032A3F0 /* GpsPollingUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A6E29C909540032A3F0 /* GpsPollingUITestsLaunchTests.swift */; };
+		43AF0A6329C909540032A3F0 /* SkywireTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A6229C909540032A3F0 /* SkywireTests.swift */; };
+		43AF0A6D29C909540032A3F0 /* SkywireUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A6C29C909540032A3F0 /* SkywireUITests.swift */; };
+		43AF0A6F29C909540032A3F0 /* SkywireUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A6E29C909540032A3F0 /* SkywireUITestsLaunchTests.swift */; };
 		43AF0A7D29C90A930032A3F0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AF0A7C29C90A930032A3F0 /* CoreLocation.framework */; };
 		43AF0A7E29C90AD40032A3F0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AF0A7C29C90A930032A3F0 /* CoreLocation.framework */; };
 		43AF0A7F29C90AD50032A3F0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AF0A7C29C90A930032A3F0 /* CoreLocation.framework */; };
@@ -40,16 +40,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		43AF0A4E29C909520032A3F0 /* GpsPolling.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GpsPolling.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		43AF0A5129C909520032A3F0 /* GpsPollingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpsPollingApp.swift; sourceTree = "<group>"; };
+		43AF0A4E29C909520032A3F0 /* Skywire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Skywire.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		43AF0A5129C909520032A3F0 /* SkywireApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkywireApp.swift; sourceTree = "<group>"; };
 		43AF0A5329C909520032A3F0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		43AF0A5529C909540032A3F0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		43AF0A5829C909540032A3F0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		43AF0A5E29C909540032A3F0 /* GpsPollingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GpsPollingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		43AF0A6229C909540032A3F0 /* GpsPollingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpsPollingTests.swift; sourceTree = "<group>"; };
-		43AF0A6829C909540032A3F0 /* GpsPollingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GpsPollingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		43AF0A6C29C909540032A3F0 /* GpsPollingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpsPollingUITests.swift; sourceTree = "<group>"; };
-		43AF0A6E29C909540032A3F0 /* GpsPollingUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpsPollingUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		43AF0A5E29C909540032A3F0 /* SkywireTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkywireTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		43AF0A6229C909540032A3F0 /* SkywireTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkywireTests.swift; sourceTree = "<group>"; };
+		43AF0A6829C909540032A3F0 /* SkywireUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkywireUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		43AF0A6C29C909540032A3F0 /* SkywireUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkywireUITests.swift; sourceTree = "<group>"; };
+		43AF0A6E29C909540032A3F0 /* SkywireUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkywireUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		43AF0A7C29C90A930032A3F0 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		43AF0A8729C9B1520032A3F0 /* RecordedFilesview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordedFilesview.swift; sourceTree = "<group>"; };
 		43AF0A8929C9B1F40032A3F0 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
@@ -87,9 +87,9 @@
 		43AF0A4529C909520032A3F0 = {
 			isa = PBXGroup;
 			children = (
-				43AF0A5029C909520032A3F0 /* GpsPolling */,
-				43AF0A6129C909540032A3F0 /* GpsPollingTests */,
-				43AF0A6B29C909540032A3F0 /* GpsPollingUITests */,
+				43AF0A5029C909520032A3F0 /* Skywire */,
+				43AF0A6129C909540032A3F0 /* SkywireTests */,
+				43AF0A6B29C909540032A3F0 /* SkywireUITests */,
 				43AF0A4F29C909520032A3F0 /* Products */,
 				43AF0A7B29C90A930032A3F0 /* Frameworks */,
 			);
@@ -98,17 +98,17 @@
 		43AF0A4F29C909520032A3F0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				43AF0A4E29C909520032A3F0 /* GpsPolling.app */,
-				43AF0A5E29C909540032A3F0 /* GpsPollingTests.xctest */,
-				43AF0A6829C909540032A3F0 /* GpsPollingUITests.xctest */,
+				43AF0A4E29C909520032A3F0 /* Skywire.app */,
+				43AF0A5E29C909540032A3F0 /* SkywireTests.xctest */,
+				43AF0A6829C909540032A3F0 /* SkywireUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		43AF0A5029C909520032A3F0 /* GpsPolling */ = {
+		43AF0A5029C909520032A3F0 /* Skywire */ = {
 			isa = PBXGroup;
 			children = (
-				43AF0A5129C909520032A3F0 /* GpsPollingApp.swift */,
+				43AF0A5129C909520032A3F0 /* SkywireApp.swift */,
 				43AF0A5329C909520032A3F0 /* ContentView.swift */,
 				43AF0A5529C909540032A3F0 /* Assets.xcassets */,
 				43AF0A5729C909540032A3F0 /* Preview Content */,
@@ -116,7 +116,7 @@
 				43AF0A8929C9B1F40032A3F0 /* MainTabView.swift */,
 				43AF0A8B29C9B32D0032A3F0 /* ActivityView.swift */,
 			);
-			path = GpsPolling;
+			path = Skywire;
 			sourceTree = "<group>";
 		};
 		43AF0A5729C909540032A3F0 /* Preview Content */ = {
@@ -127,21 +127,21 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		43AF0A6129C909540032A3F0 /* GpsPollingTests */ = {
+		43AF0A6129C909540032A3F0 /* SkywireTests */ = {
 			isa = PBXGroup;
 			children = (
-				43AF0A6229C909540032A3F0 /* GpsPollingTests.swift */,
+				43AF0A6229C909540032A3F0 /* SkywireTests.swift */,
 			);
-			path = GpsPollingTests;
+			path = SkywireTests;
 			sourceTree = "<group>";
 		};
-		43AF0A6B29C909540032A3F0 /* GpsPollingUITests */ = {
+		43AF0A6B29C909540032A3F0 /* SkywireUITests */ = {
 			isa = PBXGroup;
 			children = (
-				43AF0A6C29C909540032A3F0 /* GpsPollingUITests.swift */,
-				43AF0A6E29C909540032A3F0 /* GpsPollingUITestsLaunchTests.swift */,
+				43AF0A6C29C909540032A3F0 /* SkywireUITests.swift */,
+				43AF0A6E29C909540032A3F0 /* SkywireUITestsLaunchTests.swift */,
 			);
-			path = GpsPollingUITests;
+			path = SkywireUITests;
 			sourceTree = "<group>";
 		};
 		43AF0A7B29C90A930032A3F0 /* Frameworks */ = {
@@ -155,9 +155,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		43AF0A4D29C909520032A3F0 /* GpsPolling */ = {
+		43AF0A4D29C909520032A3F0 /* Skywire */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 43AF0A7229C909540032A3F0 /* Build configuration list for PBXNativeTarget "GpsPolling" */;
+			buildConfigurationList = 43AF0A7229C909540032A3F0 /* Build configuration list for PBXNativeTarget "Skywire" */;
 			buildPhases = (
 				43AF0A4A29C909520032A3F0 /* Sources */,
 				43AF0A4B29C909520032A3F0 /* Frameworks */,
@@ -167,14 +167,14 @@
 			);
 			dependencies = (
 			);
-			name = GpsPolling;
+			name = Skywire;
 			productName = GpsPolling;
-			productReference = 43AF0A4E29C909520032A3F0 /* GpsPolling.app */;
+			productReference = 43AF0A4E29C909520032A3F0 /* Skywire.app */;
 			productType = "com.apple.product-type.application";
 		};
-		43AF0A5D29C909540032A3F0 /* GpsPollingTests */ = {
+		43AF0A5D29C909540032A3F0 /* SkywireTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 43AF0A7529C909540032A3F0 /* Build configuration list for PBXNativeTarget "GpsPollingTests" */;
+			buildConfigurationList = 43AF0A7529C909540032A3F0 /* Build configuration list for PBXNativeTarget "SkywireTests" */;
 			buildPhases = (
 				43AF0A5A29C909540032A3F0 /* Sources */,
 				43AF0A5B29C909540032A3F0 /* Frameworks */,
@@ -185,14 +185,14 @@
 			dependencies = (
 				43AF0A6029C909540032A3F0 /* PBXTargetDependency */,
 			);
-			name = GpsPollingTests;
+			name = SkywireTests;
 			productName = GpsPollingTests;
-			productReference = 43AF0A5E29C909540032A3F0 /* GpsPollingTests.xctest */;
+			productReference = 43AF0A5E29C909540032A3F0 /* SkywireTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		43AF0A6729C909540032A3F0 /* GpsPollingUITests */ = {
+		43AF0A6729C909540032A3F0 /* SkywireUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 43AF0A7829C909540032A3F0 /* Build configuration list for PBXNativeTarget "GpsPollingUITests" */;
+			buildConfigurationList = 43AF0A7829C909540032A3F0 /* Build configuration list for PBXNativeTarget "SkywireUITests" */;
 			buildPhases = (
 				43AF0A6429C909540032A3F0 /* Sources */,
 				43AF0A6529C909540032A3F0 /* Frameworks */,
@@ -203,9 +203,9 @@
 			dependencies = (
 				43AF0A6A29C909540032A3F0 /* PBXTargetDependency */,
 			);
-			name = GpsPollingUITests;
+			name = SkywireUITests;
 			productName = GpsPollingUITests;
-			productReference = 43AF0A6829C909540032A3F0 /* GpsPollingUITests.xctest */;
+			productReference = 43AF0A6829C909540032A3F0 /* SkywireUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -231,7 +231,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 43AF0A4929C909520032A3F0 /* Build configuration list for PBXProject "GpsPolling" */;
+			buildConfigurationList = 43AF0A4929C909520032A3F0 /* Build configuration list for PBXProject "Skywire" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -244,9 +244,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				43AF0A4D29C909520032A3F0 /* GpsPolling */,
-				43AF0A5D29C909540032A3F0 /* GpsPollingTests */,
-				43AF0A6729C909540032A3F0 /* GpsPollingUITests */,
+				43AF0A4D29C909520032A3F0 /* Skywire */,
+				43AF0A5D29C909540032A3F0 /* SkywireTests */,
+				43AF0A6729C909540032A3F0 /* SkywireUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -284,7 +284,7 @@
 			files = (
 				43AF0A8829C9B1520032A3F0 /* RecordedFilesview.swift in Sources */,
 				43AF0A5429C909520032A3F0 /* ContentView.swift in Sources */,
-				43AF0A5229C909520032A3F0 /* GpsPollingApp.swift in Sources */,
+				43AF0A5229C909520032A3F0 /* SkywireApp.swift in Sources */,
 				43AF0A8C29C9B32D0032A3F0 /* ActivityView.swift in Sources */,
 				43AF0A8A29C9B1F40032A3F0 /* MainTabView.swift in Sources */,
 			);
@@ -294,7 +294,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43AF0A6329C909540032A3F0 /* GpsPollingTests.swift in Sources */,
+				43AF0A6329C909540032A3F0 /* SkywireTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,8 +302,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43AF0A6D29C909540032A3F0 /* GpsPollingUITests.swift in Sources */,
-				43AF0A6F29C909540032A3F0 /* GpsPollingUITestsLaunchTests.swift in Sources */,
+				43AF0A6D29C909540032A3F0 /* SkywireUITests.swift in Sources */,
+				43AF0A6F29C909540032A3F0 /* SkywireUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,12 +312,12 @@
 /* Begin PBXTargetDependency section */
 		43AF0A6029C909540032A3F0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 43AF0A4D29C909520032A3F0 /* GpsPolling */;
+			target = 43AF0A4D29C909520032A3F0 /* Skywire */;
 			targetProxy = 43AF0A5F29C909540032A3F0 /* PBXContainerItemProxy */;
 		};
 		43AF0A6A29C909540032A3F0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 43AF0A4D29C909520032A3F0 /* GpsPolling */;
+			target = 43AF0A4D29C909520032A3F0 /* Skywire */;
 			targetProxy = 43AF0A6929C909540032A3F0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -444,11 +444,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"GpsPolling/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Skywire/Preview Content\"";
 				DEVELOPMENT_TEAM = 4U9P35TVXY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = GpsPolling/Info.plist;
+				INFOPLIST_FILE = Skywire/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSLocationUsageDescription = "Skywire needs to track position of the aircraft to properly collect the data.";
@@ -463,7 +463,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.learning.GpsPolling;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.learning.Skywire;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -478,11 +478,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"GpsPolling/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Skywire/Preview Content\"";
 				DEVELOPMENT_TEAM = 4U9P35TVXY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = GpsPolling/Info.plist;
+				INFOPLIST_FILE = Skywire/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSLocationUsageDescription = "Skywire needs to track position of the aircraft to properly collect the data.";
@@ -497,7 +497,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.learning.GpsPolling;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.learning.Skywire;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -521,7 +521,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GpsPolling.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GpsPolling";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Skywire.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Skywire";
 			};
 			name = Debug;
 		};
@@ -541,7 +541,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GpsPolling.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GpsPolling";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Skywire.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Skywire";
 			};
 			name = Release;
 		};
@@ -584,7 +584,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		43AF0A4929C909520032A3F0 /* Build configuration list for PBXProject "GpsPolling" */ = {
+		43AF0A4929C909520032A3F0 /* Build configuration list for PBXProject "Skywire" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				43AF0A7029C909540032A3F0 /* Debug */,
@@ -593,7 +593,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		43AF0A7229C909540032A3F0 /* Build configuration list for PBXNativeTarget "GpsPolling" */ = {
+		43AF0A7229C909540032A3F0 /* Build configuration list for PBXNativeTarget "Skywire" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				43AF0A7329C909540032A3F0 /* Debug */,
@@ -602,7 +602,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		43AF0A7529C909540032A3F0 /* Build configuration list for PBXNativeTarget "GpsPollingTests" */ = {
+		43AF0A7529C909540032A3F0 /* Build configuration list for PBXNativeTarget "SkywireTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				43AF0A7629C909540032A3F0 /* Debug */,
@@ -611,7 +611,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		43AF0A7829C909540032A3F0 /* Build configuration list for PBXNativeTarget "GpsPollingUITests" */ = {
+		43AF0A7829C909540032A3F0 /* Build configuration list for PBXNativeTarget "SkywireUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				43AF0A7929C909540032A3F0 /* Debug */,

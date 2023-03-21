@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  GpsPolling
+//  Skywire
 //
 //  Created by Kamil Kuczaj on 20/03/2023.
 //

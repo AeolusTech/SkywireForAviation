@@ -1,13 +1,13 @@
 //
-//  GpsPollingUITests.swift
-//  GpsPollingUITests
+//  SkywireUITests.swift
+//  SkywireUITests
 //
 //  Created by Kamil Kuczaj on 20/03/2023.
 //
 
 import XCTest
 
-final class GpsPollingUITests: XCTestCase {
+final class SkywireUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

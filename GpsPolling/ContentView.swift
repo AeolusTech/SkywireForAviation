@@ -169,6 +169,30 @@ struct ContentView: View {
                 }
                 .padding(.horizontal)
             }
+            VStack(alignment: .leading, spacing: 10) {
+                HStack {
+                    Text("Latitude:")
+                        .font(.headline)
+                    Spacer()
+                    Text("\(locationViewModel.locationManager.location?.coordinate.latitude ?? 0, specifier: "%.6f")")
+                        .font(.body)
+                }
+                HStack {
+                    Text("Longitude:")
+                        .font(.headline)
+                    Spacer()
+                    Text("\(locationViewModel.locationManager.location?.coordinate.longitude ?? 0, specifier: "%.6f")")
+                        .font(.body)
+                }
+                HStack {
+                    Text("Altitude:")
+                        .font(.headline)
+                    Spacer()
+                    Text("\(locationViewModel.locationManager.location?.altitude ?? 0, specifier: "%.2f") m")
+                        .font(.body)
+                }
+            }
+            .padding(.horizontal)
         }
         .alert(isPresented: $locationViewModel.showAlert) {
             Alert(title: Text("Success"), message: Text(locationViewModel.alertMessage), dismissButton: .default(Text("OK")))

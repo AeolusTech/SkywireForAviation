@@ -21,6 +21,11 @@ struct MainTabView: View {
                     Image(systemName: "doc.text.fill")
                     Text("Recorded Files")
                 }
+            SettingsView()
+                .tabItem {
+                    Image(systemName: "gear")
+                    Text("Settings")
+                }
         }
     }
 }

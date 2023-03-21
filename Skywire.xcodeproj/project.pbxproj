@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		43859C1329C9F390009BB939 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43859C1229C9F390009BB939 /* SettingsView.swift */; };
 		43AF0A5229C909520032A3F0 /* SkywireApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A5129C909520032A3F0 /* SkywireApp.swift */; };
 		43AF0A5429C909520032A3F0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A5329C909520032A3F0 /* ContentView.swift */; };
 		43AF0A5629C909540032A3F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43AF0A5529C909540032A3F0 /* Assets.xcassets */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		43859C1229C9F390009BB939 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		43AF0A4E29C909520032A3F0 /* Skywire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Skywire.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43AF0A5129C909520032A3F0 /* SkywireApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkywireApp.swift; sourceTree = "<group>"; };
 		43AF0A5329C909520032A3F0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				43AF0A8729C9B1520032A3F0 /* RecordedFilesview.swift */,
 				43AF0A8929C9B1F40032A3F0 /* MainTabView.swift */,
 				43AF0A8B29C9B32D0032A3F0 /* ActivityView.swift */,
+				43859C1229C9F390009BB939 /* SettingsView.swift */,
 			);
 			path = Skywire;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				43AF0A8829C9B1520032A3F0 /* RecordedFilesview.swift in Sources */,
 				43AF0A5429C909520032A3F0 /* ContentView.swift in Sources */,
 				43AF0A5229C909520032A3F0 /* SkywireApp.swift in Sources */,
+				43859C1329C9F390009BB939 /* SettingsView.swift in Sources */,
 				43AF0A8C29C9B32D0032A3F0 /* ActivityView.swift in Sources */,
 				43AF0A8A29C9B1F40032A3F0 /* MainTabView.swift in Sources */,
 			);

@@ -54,6 +54,9 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var showAlert = false
     @Published var alertMessage = ""
     @Published var currentHeading: CLLocationDirection = 0
+    
+    @AppStorage("pollingRate") private var pollingRate: String = "1.0"
+
 
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         locationManagerDidChangeAuthorization(manager)
@@ -68,9 +71,10 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
         
-        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+        Timer.scheduledTimer(withTimeInterval: Double(pollingRate) ?? 1.0, repeats: true) { _ in
             self.saveLocationData()
         }
+
     }
     
     func showSuccessAlert() {

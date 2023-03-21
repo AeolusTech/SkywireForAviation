@@ -53,6 +53,13 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var csvData: String = "Timestamp,Latitude,Longitude,Altitude\n"
     @Published var showAlert = false
     @Published var alertMessage = ""
+    @Published var currentHeading: CLLocationDirection = 0
+
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        locationManagerDidChangeAuthorization(manager)
+        print("Heading updated: \(newHeading.magneticHeading)")
+        currentHeading = newHeading.magneticHeading
+    }
     
     override init() {
         super.init()
@@ -61,7 +68,7 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
         
-        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
             self.saveLocationData()
         }
     }
@@ -188,7 +195,21 @@ struct ContentView: View {
                     Text("Altitude:")
                         .font(.headline)
                     Spacer()
-                    Text("\(locationViewModel.locationManager.location?.altitude ?? 0, specifier: "%.2f") m")
+                    Text("\((locationViewModel.locationManager.location?.altitude ?? 0) * 3.28084, specifier: "%.2f") ft")
+                        .font(.body)
+                }
+                HStack {
+                    Text("Speed:")
+                        .font(.headline)
+                    Spacer()
+                    Text("\((locationViewModel.locationManager.location?.speed ?? 0) * 1.94384, specifier: "%.2f") knots")
+                        .font(.body)
+                }
+                HStack {
+                    Text("Magnetic Heading:")
+                        .font(.headline)
+                    Spacer()
+                    Text("\(Int(locationViewModel.currentHeading))°")
                         .font(.body)
                 }
             }

@@ -13,11 +13,14 @@ struct RecordedFilesView: View {
     @State private var isSharingFile: Bool = false
     @State private var fileToShare: URL?
 
-    private func shareFile(fileURL: URL) {
-        fileToShare = fileURL
-        isSharingFile = true
-    }
 
+    private func shareFile(fileURL: URL) {
+        if let tempFileURL = createTemporaryFileCopy(fileURL: fileURL) {
+            fileToShare = tempFileURL
+            isSharingFile = true
+        }
+    }
+    
     private func sharingFileActivityView() -> some View {
         VStack {
             if let fileURL = fileToShare {
@@ -26,6 +29,25 @@ struct RecordedFilesView: View {
         }
     }
 
+    private func createTemporaryFileCopy(fileURL: URL) -> URL? {
+        let tempDirectory = FileManager.default.temporaryDirectory
+        let tempFileURL = tempDirectory.appendingPathComponent(fileURL.lastPathComponent)
+        
+        do {
+            if FileManager.default.fileExists(atPath: tempFileURL.path) {
+                try FileManager.default.removeItem(at: tempFileURL)
+            }
+            
+            try FileManager.default.copyItem(at: fileURL, to: tempFileURL)
+            return tempFileURL
+        } catch {
+            print("Failed to create temporary file: \(error)")
+        }
+        
+        return nil
+    }
+
+    
     private func loadRecordedFiles() {
         let fileManager = FileManager.default
         if let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {

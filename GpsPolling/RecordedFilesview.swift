@@ -10,6 +10,21 @@ import SwiftUI
 struct RecordedFilesView: View {
     @State private var recordedFiles: [URL] = []
     @State private var sortOldestFirst: Bool = false
+    @State private var isSharingFile: Bool = false
+    @State private var fileToShare: URL?
+
+    private func shareFile(fileURL: URL) {
+        fileToShare = fileURL
+        isSharingFile = true
+    }
+
+    private func sharingFileActivityView() -> some View {
+        VStack {
+            if let fileURL = fileToShare {
+                ActivityView(activityItems: [fileURL])
+            }
+        }
+    }
 
     private func loadRecordedFiles() {
         let fileManager = FileManager.default
@@ -36,6 +51,14 @@ struct RecordedFilesView: View {
             List {
                 ForEach(recordedFiles, id: \.self) { file in
                     Text(file.lastPathComponent)
+                    .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                        Button(role: .destructive) {
+                            shareFile(fileURL: file)
+                        } label: {
+                            Label("Share", systemImage: "square.and.arrow.up")
+                        }
+                        .tint(.blue)
+                    }
                 }
                 .onDelete(perform: deleteRecordedFile)
             }
@@ -47,6 +70,9 @@ struct RecordedFilesView: View {
                 Text(sortOldestFirst ? "Sort by Newest" : "Sort by Oldest")
             }, trailing: EditButton())
             .onAppear(perform: loadRecordedFiles)
+        }
+        .sheet(isPresented: $isSharingFile) {
+            sharingFileActivityView()
         }
     }
     

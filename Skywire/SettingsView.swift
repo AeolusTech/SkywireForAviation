@@ -6,32 +6,76 @@
 //
 
 import SwiftUI
-import Combine
 
 struct SettingsView: View {
-    @AppStorage("pollingRate") private var pollingRate: String = "1.0"
+    @Binding var pollingRate: String
+    
+    @State private var initialPollingRate: String = ""
+    @State private var keyboardHeight: CGFloat = 0
     
     var body: some View {
-        NavigationView {
+        VStack {
             Form {
-                Section(header: Text("Location Polling Rate")) {
-                    TextField("Polling rate", text: $pollingRate)
+                Section(header: Text("Polling Rate")) {
+                    TextField("Enter polling rate", text: $pollingRate)
                         .keyboardType(.decimalPad)
-                        .onReceive(Just(pollingRate)) { newValue in
-                            let filtered = newValue.filter { $0.isNumber || $0 == "." || $0 == "," }
-                            if filtered != newValue {
-                                self.pollingRate = filtered
-                            }
-                        }
                 }
             }
-            .navigationTitle("Settings")
+            
+            HStack {
+                Spacer()
+                
+                Button(action: {
+                    saveButtonTapped()
+                }) {
+                    Text("Save")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .padding()
+                
+                Button(action: {
+                    cancelButtonTapped()
+                }) {
+                    Text("Cancel")
+                        .padding()
+                        .background(Color.red)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .padding()
+                
+                Spacer()
+            }
+            .padding(.bottom, keyboardHeight)
         }
+        .onAppear {
+            initialPollingRate = pollingRate
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { (notification) in
+                let value = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
+                let height = value.height
+                keyboardHeight = height
+            }
+            
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { (notification) in
+                keyboardHeight = 0
+            }
+        }
+    }
+    
+    func saveButtonTapped() {
+        // Dismiss the keyboard
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+    
+    func cancelButtonTapped() {
+        // Restore the initial polling rate
+        pollingRate = initialPollingRate
+        
+        // Dismiss the keyboard
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
 
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView()
-    }
-}

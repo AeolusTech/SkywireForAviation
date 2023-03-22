@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct SkywireApp: App {
+    @StateObject private var locationViewModel = LocationViewModel()
+
     var body: some Scene {
         WindowGroup {
             MainTabView()
+                .environmentObject(locationViewModel)
         }
     }
 }

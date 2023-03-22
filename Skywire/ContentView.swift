@@ -50,13 +50,31 @@ struct MapView: UIViewRepresentable {
 
 class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var locationManager = CLLocationManager()
-    @Published var csvData: String = "Timestamp,Latitude,Longitude,Altitude\n"
+    private var csvHeader: String = "Timestamp,Latitude,Longitude,Altitude\n"
+    private var csvData: String
     @Published var showAlert = false
     @Published var alertMessage = ""
     @Published var currentHeading: CLLocationDirection = 0
+    private var timer: Timer?
     
-    @AppStorage("pollingRate") private var pollingRate: String = "1.0"
-
+    private var _pollingRate: String = "0.5"
+    var pollingRate: String {
+        get {
+            return _pollingRate
+        }
+        set {
+            _pollingRate = newValue
+            startTimer()
+        }
+    }
+    
+    func startTimer() {
+        print("startTimer log. pollingRate = \(pollingRate)")
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: Double(pollingRate) ?? 1.0, repeats: true) { _ in
+            self.saveLocationData()
+        }
+    }
 
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         locationManagerDidChangeAuthorization(manager)
@@ -64,28 +82,22 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         currentHeading = newHeading.magneticHeading
     }
     
+    
     override init() {
+        csvData = csvHeader
         super.init()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
         
-        Timer.scheduledTimer(withTimeInterval: Double(pollingRate) ?? 1.0, repeats: true) { _ in
-            self.saveLocationData()
-        }
-
+        startTimer()
     }
     
     func showSuccessAlert() {
             alertMessage = "File saved successfully."
             showAlert = true
     }
-//
-//    func showFailAlert(error: Error) {
-//            alertMessage = "Error saving file! Error: \(error)"
-//            showAlert = true
-//    }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
@@ -124,7 +136,6 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                 showSuccessAlert()
             } catch {
                 print("Failed to save CSV file: \(error)")
-//                showFailAlert(error: error)
             }
         }
     }
@@ -138,11 +149,13 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     func stopRecording() {
         recording = false
         saveCSVDataToFile()
+        csvData = csvHeader
     }
 }
 
 struct ContentView: View {
     @StateObject private var locationViewModel = LocationViewModel()
+    
     
     var body: some View {
         VStack {
@@ -225,8 +238,3 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}

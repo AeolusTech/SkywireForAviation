@@ -29,14 +29,14 @@
 			containerPortal = 43AF0A4629C909520032A3F0 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 43AF0A4D29C909520032A3F0;
-			remoteInfo = GpsPolling;
+			remoteInfo = Skywire;
 		};
 		43AF0A6929C909540032A3F0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43AF0A4629C909520032A3F0 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 43AF0A4D29C909520032A3F0;
-			remoteInfo = GpsPolling;
+			remoteInfo = Skywire;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -171,7 +171,7 @@
 			dependencies = (
 			);
 			name = Skywire;
-			productName = GpsPolling;
+			productName = Skywire;
 			productReference = 43AF0A4E29C909520032A3F0 /* Skywire.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -189,7 +189,7 @@
 				43AF0A6029C909540032A3F0 /* PBXTargetDependency */,
 			);
 			name = SkywireTests;
-			productName = GpsPollingTests;
+			productName = SkywireTests;
 			productReference = 43AF0A5E29C909540032A3F0 /* SkywireTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
@@ -207,7 +207,7 @@
 				43AF0A6A29C909540032A3F0 /* PBXTargetDependency */,
 			);
 			name = SkywireUITests;
-			productName = GpsPollingUITests;
+			productName = SkywireUITests;
 			productReference = 43AF0A6829C909540032A3F0 /* SkywireUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
@@ -453,7 +453,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Skywire/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Skywire;
+				INFOPLIST_KEY_CFBundleDisplayName = "Skywire for Aviation";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This way Skywire app can track your flight data.";
@@ -467,7 +467,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.learning.Skywire;
+				PRODUCT_BUNDLE_IDENTIFIER = org.creativesoftwarekamilkuczaj.SkywireForAviation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -487,7 +487,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Skywire/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Skywire;
+				INFOPLIST_KEY_CFBundleDisplayName = "Skywire for Aviation";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This way Skywire app can track your flight data.";
@@ -501,7 +501,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.learning.Skywire;
+				PRODUCT_BUNDLE_IDENTIFIER = org.creativesoftwarekamilkuczaj.SkywireForAviation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -520,7 +520,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.learning.GpsPollingTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.learning.SkywireTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -540,7 +540,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.learning.GpsPollingTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.learning.SkywireTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -558,12 +558,12 @@
 				DEVELOPMENT_TEAM = 4U9P35TVXY;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.learning.GpsPollingUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.learning.SkywireUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = GpsPolling;
+				TEST_TARGET_NAME = Skywire;
 			};
 			name = Debug;
 		};
@@ -576,12 +576,12 @@
 				DEVELOPMENT_TEAM = 4U9P35TVXY;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.learning.GpsPollingUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.learning.SkywireUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = GpsPolling;
+				TEST_TARGET_NAME = Skywire;
 			};
 			name = Release;
 		};

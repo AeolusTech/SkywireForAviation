@@ -52,8 +52,6 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var locationManager = CLLocationManager()
     private var csvHeader: String = "Timestamp,Latitude,Longitude,Altitude,Heading\n"
     private var csvData: String
-    @Published var showAlert = false
-    @Published var alertMessage = ""
     @Published var currentHeading: CLLocationDirection = 0
     private var timer: Timer?
     
@@ -95,8 +93,17 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func showSuccessAlert() {
-            alertMessage = "File saved successfully."
-            showAlert = true
+        let alert = UIAlertController(title: "Success",
+                                      message: "File saved successfully",
+                                      preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: nil))
+        if let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            if let rootViewController = firstScene.windows.first?.rootViewController {
+                rootViewController.present(alert, animated: true, completion: nil)
+            }
+        }
+
     }
     
     func showLocationAccessMessage() {
@@ -311,9 +318,6 @@ struct ContentView: View {
                 }
             }
             .padding(.horizontal)
-        }
-        .alert(isPresented: $locationViewModel.showAlert) {
-            Alert(title: Text("Success"), message: Text(locationViewModel.alertMessage), dismissButton: .default(Text("OK")))
         }
     }
 }

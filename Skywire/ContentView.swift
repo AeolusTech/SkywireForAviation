@@ -50,7 +50,7 @@ struct MapView: UIViewRepresentable {
 
 class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var locationManager = CLLocationManager()
-    private var csvHeader: String = "Timestamp,Latitude,Longitude,Altitude\n"
+    private var csvHeader: String = "Timestamp,Latitude,Longitude,Altitude,Heading\n"
     private var csvData: String
     @Published var showAlert = false
     @Published var alertMessage = ""
@@ -78,7 +78,6 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         locationManagerDidChangeAuthorization(manager)
-        print("Heading updated: \(newHeading.magneticHeading)")
         currentHeading = newHeading.magneticHeading
     }
     
@@ -90,6 +89,7 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
+        locationManager.startUpdatingHeading()
         
         startTimer()
     }
@@ -114,8 +114,9 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             let latitude = location.coordinate.latitude
             let longitude = location.coordinate.longitude
             let altitude = location.altitude
+            let heading = currentHeading
             
-            let row = "\(timestamp),\(latitude),\(longitude),\(altitude)\n"
+            let row = "\(timestamp),\(latitude),\(longitude),\(altitude),\(heading)\n"
             csvData.append(row)
         }
     }

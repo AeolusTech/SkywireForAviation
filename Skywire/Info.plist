@@ -21,6 +21,12 @@
 			</array>
 		</dict>
 	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+		<string>processing</string>
+		<string></string>
+	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 </dict>

@@ -10,7 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     @Binding var pollingRate: String
     
-    @State private var initialPollingRate: String = ""
+    @State private var initialPollingRate: String = "0.5"
     @State private var keyboardHeight: CGFloat = 0
     
     var body: some View {

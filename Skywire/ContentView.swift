@@ -54,8 +54,9 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     private var csvData: String
     @Published var currentHeading: CLLocationDirection = 0
     private var timer: Timer?
-    
-    private var _pollingRate: String = "0.5"
+    private var isAlertPresented = false
+    private var _pollingRate: String = "0.5" // half a second
+
     var pollingRate: String {
         get {
             return _pollingRate
@@ -93,20 +94,25 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func showSuccessAlert() {
+        guard !isAlertPresented else { return }
         let alert = UIAlertController(title: "Success",
                                       message: "File saved successfully",
                                       preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: {
+            _ in self.isAlertPresented = false
+        }))
+        
         if let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
             if let rootViewController = firstScene.windows.first?.rootViewController {
                 rootViewController.present(alert, animated: true, completion: nil)
             }
         }
-
+        isAlertPresented = true // Set the flag to true to indicate that an alert is being presented
     }
     
     func showLocationAccessMessage() {
+        guard !isAlertPresented else { return } // Check if an alert is already being presented
         let message = "To record your location data, you need to allow Always location access in the Settings app."
         let alert = UIAlertController(title: "Location Access", message: message, preferredStyle: .alert)
         let settingsAction = UIAlertAction(title: "Go to Settings", style: .default) { _ in
@@ -129,6 +135,7 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                 rootViewController.present(alert, animated: true, completion: nil)
             }
         }
+        isAlertPresented = true
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
@@ -137,21 +144,9 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             locationManager.requestAlwaysAuthorization() // request "Always" authorization after initial "While Using the App" authorization is granted
         case .authorizedAlways:
             locationManager.startUpdatingLocation()
+            isAlertPresented = false
         default:
-            let alert = UIAlertController(title: "Location Access Required",
-                                          message: "This app requires location access to function properly. Please allow location access to 'Always'.",
-                                          preferredStyle: .alert)
-            let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
-                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
-            }
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            alert.addAction(settingsAction)
-            alert.addAction(cancelAction)
-            if let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-                if let rootViewController = firstScene.windows.first?.rootViewController {
-                    rootViewController.present(alert, animated: true, completion: nil)
-                }
-            }
+            showLocationAccessMessage()
         }
     }
 

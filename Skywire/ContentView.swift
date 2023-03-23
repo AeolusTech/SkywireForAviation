@@ -101,6 +101,8 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
+        case .authorizedWhenInUse:
+            locationManager.requestAlwaysAuthorization() // request "Always" authorization after initial "While Using the App" authorization is granted
         case .authorizedAlways:
             locationManager.startUpdatingLocation()
         default:
@@ -120,6 +122,7 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
         }
     }
+
     
     func saveLocationData() {
         if recording, let location = locationManager.location {
@@ -170,9 +173,32 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
 struct ContentView: View {
     @StateObject private var locationViewModel = LocationViewModel()
     
+    var shouldShowLocationWarning: Bool {
+        return locationViewModel.locationManager.authorizationStatus != .authorizedAlways
+    }
+    
+    var canStartRecording: Bool {
+        return locationViewModel.locationManager.authorizationStatus == .authorizedAlways
+    }
     
     var body: some View {
         VStack {
+            if shouldShowLocationWarning {
+                HStack {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundColor(.red)
+                    Text("Location access is required to record data.")
+                        .font(.headline)
+                        .foregroundColor(.red)
+                }
+                .padding(.horizontal)
+                .padding(.top)
+                .onTapGesture {
+                    if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(settingsURL)
+                    }
+                }
+            }
             MapView(coordinate: .constant(locationViewModel.locationManager.location?.coordinate ?? CLLocationCoordinate2D()))
                 .frame(height: 300)
             
@@ -181,18 +207,34 @@ struct ContentView: View {
                 .padding()
             
             if !locationViewModel.recording {
-                Button(action: {
-                    locationViewModel.startRecording()
-                }) {
-                    Text("Record position")
-                        .font(.title)
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .padding()
-                        .background(Color.green)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                if canStartRecording {
+                    Button(action: {
+                        locationViewModel.startRecording()
+                    }) {
+                        Text("Record position")
+                            .font(.title)
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .padding()
+                            .background(Color.green)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    .padding(.horizontal)
+                } else {
+                    Button(action: {
+                        locationViewModel.startRecording()
+                    }) {
+                        Text("Record position blocked")
+                            .font(.title)
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .padding()
+                            .background(Color.gray)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    .padding(.horizontal)
+                    .disabled(!canStartRecording)
                 }
-                .padding(.horizontal)
             } else {
                 Button(action: {
                     locationViewModel.stopRecording()

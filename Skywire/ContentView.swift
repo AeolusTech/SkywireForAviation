@@ -86,7 +86,7 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         csvData = csvHeader
         super.init()
         locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
         locationManager.startUpdatingHeading()
@@ -101,10 +101,23 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
-        case .authorizedWhenInUse:
+        case .authorizedAlways:
             locationManager.startUpdatingLocation()
         default:
-            locationManager.requestWhenInUseAuthorization()
+            let alert = UIAlertController(title: "Location Access Required",
+                                          message: "This app requires location access to function properly. Please allow location access to 'Always'.",
+                                          preferredStyle: .alert)
+            let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alert.addAction(settingsAction)
+            alert.addAction(cancelAction)
+            if let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                if let rootViewController = firstScene.windows.first?.rootViewController {
+                    rootViewController.present(alert, animated: true, completion: nil)
+                }
+            }
         }
     }
     

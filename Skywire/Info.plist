@@ -25,7 +25,11 @@
 	<array>
 		<string>location</string>
 		<string>processing</string>
-		<string></string>
+	</array>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.apple.locationd</string>
+		<string>com.apple.heading</string>
 	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>

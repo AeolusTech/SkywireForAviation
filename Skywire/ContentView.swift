@@ -99,6 +99,31 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
             showAlert = true
     }
     
+    func showLocationAccessMessage() {
+        let message = "To record your location data, you need to allow Always location access in the Settings app."
+        let alert = UIAlertController(title: "Location Access", message: message, preferredStyle: .alert)
+        let settingsAction = UIAlertAction(title: "Go to Settings", style: .default) { _ in
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl, completionHandler: nil)
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(settingsAction)
+        alert.addAction(cancelAction)
+        
+        if let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            if let rootViewController = firstScene.windows.first?.rootViewController {
+                rootViewController.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
         case .authorizedWhenInUse:
@@ -222,7 +247,7 @@ struct ContentView: View {
                     .padding(.horizontal)
                 } else {
                     Button(action: {
-                        locationViewModel.startRecording()
+                        locationViewModel.showLocationAccessMessage()
                     }) {
                         Text("Record position blocked")
                             .font(.title)
@@ -233,7 +258,6 @@ struct ContentView: View {
                             .cornerRadius(10)
                     }
                     .padding(.horizontal)
-                    .disabled(!canStartRecording)
                 }
             } else {
                 Button(action: {

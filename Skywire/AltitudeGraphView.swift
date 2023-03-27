@@ -33,7 +33,14 @@ struct AltitudeGraphView: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
+            Text(fileURL.lastPathComponent)
+                .font(.title)
+                .padding(.bottom)
+            
+            Text("Date created: " + fileCreationDateString())
+                .font(.caption)
+            
             Chart {
                 ForEach(recordedData) { data in
                     LineMark(
@@ -44,6 +51,23 @@ struct AltitudeGraphView: View {
             }
             .frame(height: 300)
         }
+    }
+    
+    private func fileCreationDateString() -> String {
+        let fileManager = FileManager.default
+        do {
+            let attributes = try fileManager.attributesOfItem(atPath: fileURL.path)
+            if let creationDate = attributes[FileAttributeKey.creationDate] as? Date {
+                let formatter = DateFormatter()
+                formatter.dateStyle = .medium
+                formatter.timeStyle = .medium
+                return formatter.string(from: creationDate)
+            }
+        } catch {
+            print("Error getting file creation date: \(error)")
+        }
+        
+        return "Unknown"
     }
 }
 

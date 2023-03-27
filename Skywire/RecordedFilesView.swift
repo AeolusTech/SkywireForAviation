@@ -1,5 +1,5 @@
 //
-//  RecordedFilesview.swift
+//  RecordedFilesView.swift
 //  Skywire
 //
 //  Created by Kamil Kuczaj on 21/03/2023.

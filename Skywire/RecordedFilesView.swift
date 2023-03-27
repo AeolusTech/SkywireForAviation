@@ -12,20 +12,13 @@ struct RecordedFilesView: View {
     @State private var sortOldestFirst: Bool = false
     @State private var isSharingFile: Bool = false
     @State private var fileToShare: URL?
-
-
+    @State private var isShowingAltitudeGraph: Bool = false
+    @State private var selectedFile: URL?
+    
     private func shareFile(fileURL: URL) {
         if let tempFileURL = createTemporaryFileCopy(fileURL: fileURL) {
-            if tempFileURL.pathExtension == "csv" {
-                isSharingFile = false
-                fileToShare = nil
-                let altitudeGraphView = AltitudeGraphView(fileURL: tempFileURL)
-                let navView = UINavigationController(rootViewController: UIHostingController(rootView: altitudeGraphView))
-                UIApplication.shared.windows.first?.rootViewController?.present(navView, animated: true)
-            } else {
-                fileToShare = tempFileURL
-                isSharingFile = true
-            }
+            fileToShare = tempFileURL
+            isSharingFile = true
         }
     }
     
@@ -36,7 +29,7 @@ struct RecordedFilesView: View {
             }
         }
     }
-
+    
     private func createTemporaryFileCopy(fileURL: URL) -> URL? {
         let tempDirectory = FileManager.default.temporaryDirectory
         let tempFileURL = tempDirectory.appendingPathComponent(fileURL.lastPathComponent)
@@ -54,7 +47,7 @@ struct RecordedFilesView: View {
         
         return nil
     }
-
+    
     
     private func loadRecordedFiles() {
         let fileManager = FileManager.default
@@ -75,12 +68,41 @@ struct RecordedFilesView: View {
             }
         }
     }
-
+    
+    private func deleteRecordedFile(at offsets: IndexSet) {
+        for index in offsets {
+            let fileURL = recordedFiles[index]
+            let fileManager = FileManager.default
+            do {
+                try fileManager.removeItem(at: fileURL)
+                recordedFiles.remove(at: index)
+            } catch {
+                print("Error deleting recorded file: \(error)")
+            }
+        }
+    }
+    
     var body: some View {
         NavigationView {
             List {
                 ForEach(recordedFiles, id: \.self) { file in
-                    Text(file.lastPathComponent)
+                    Button(action: {
+                        print("tapped on \(file)")
+                        if file.pathExtension == "csv" {
+                            
+                            let altitudeGraphView = AltitudeGraphView(fileURL: file)
+                            let navView = UINavigationController(rootViewController: UIHostingController(rootView: altitudeGraphView))
+                            if let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                                if let rootViewController = firstScene.windows.first?.rootViewController {
+                                    rootViewController.present(navView, animated: true, completion: nil)
+                                }
+                            }
+                        } else {
+                            print("Bad extension. Should be .csv but got \(file.pathExtension)")
+                        }
+                    }, label: {
+                        Text(file.lastPathComponent)
+                    })
                     .swipeActions(edge: .leading, allowsFullSwipe: true) {
                         Button(role: .destructive) {
                             shareFile(fileURL: file)
@@ -104,24 +126,5 @@ struct RecordedFilesView: View {
         .sheet(isPresented: $isSharingFile) {
             sharingFileActivityView()
         }
-    }
-    
-    func deleteRecordedFile(at offsets: IndexSet) {
-        for index in offsets {
-            let fileURL = recordedFiles[index]
-            let fileManager = FileManager.default
-            do {
-                try fileManager.removeItem(at: fileURL)
-                recordedFiles.remove(at: index)
-            } catch {
-                print("Error deleting recorded file: \(error)")
-            }
-        }
-    }
-}
-
-struct RecordedFilesView_Previews: PreviewProvider {
-    static var previews: some View {
-        RecordedFilesView()
     }
 }

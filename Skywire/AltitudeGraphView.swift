@@ -5,9 +5,8 @@
 //  Created by Kamil Kuczaj on 27/03/2023.
 //
 
-import SwiftUI
 import Charts
-
+import SwiftUI
 
 struct AltitudeGraphView: View {
     struct RecordedData: Identifiable {
@@ -40,16 +39,9 @@ struct AltitudeGraphView: View {
             
             Text("Date created: " + fileCreationDateString())
                 .font(.caption)
-            
-            Chart {
-                ForEach(recordedData) { data in
-                    LineMark(
-                        x: .value("Timestamp", data.date),
-                        y: .value("Altitude", data.altitude)
-                    )
-                }
-            }
-            .frame(height: 300)
+        
+            AltitudeChartView(recordedData: recordedData)
+                .frame(height: 300)
         }
     }
     
@@ -69,5 +61,48 @@ struct AltitudeGraphView: View {
         
         return "Unknown"
     }
+    
+    struct AltitudeChartView: UIViewRepresentable {
+        var recordedData: [RecordedData]
+        
+        func makeUIView(context: Context) -> LineChartView {
+            let chartView = LineChartView()
+            
+            // Enable zooming and navigation
+            chartView.setScaleEnabled(true)
+            chartView.dragEnabled = true
+            chartView.pinchZoomEnabled = true
+            chartView.doubleTapToZoomEnabled = true
+            
+            let dataEntries = recordedData.map { ChartDataEntry(x: $0.date.timeIntervalSince1970, y: $0.altitude) }
+            
+            let dataSet = LineChartDataSet(entries: dataEntries)
+            dataSet.drawCirclesEnabled = false
+            dataSet.mode = .cubicBezier
+            dataSet.lineWidth = 2
+            
+            let chartData = LineChartData(dataSet: dataSet)
+            chartView.data = chartData
+            
+            return chartView
+        }
+        
+        func updateUIView(_ uiView: LineChartView, context: Context) {
+            let dataEntries = recordedData.map { ChartDataEntry(x: $0.date.timeIntervalSince1970, y: $0.altitude) }
+            
+            if let dataSet = uiView.data?.dataSets.first as? LineChartDataSet {
+                dataSet.replaceEntries(dataEntries)
+                uiView.data?.notifyDataChanged()
+                uiView.notifyDataSetChanged()
+            } else {
+                let dataSet = LineChartDataSet(entries: dataEntries)
+                dataSet.drawCirclesEnabled = false
+                dataSet.mode = .cubicBezier
+                dataSet.lineWidth = 2
+                
+                let chartData = LineChartData(dataSet: dataSet)
+                uiView.data = chartData
+            }
+        }
+    }
 }
-

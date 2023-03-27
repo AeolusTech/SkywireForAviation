@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		433ACF0929D2412700A3A0A1 /* AltitudeGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433ACF0829D2412700A3A0A1 /* AltitudeGraphView.swift */; };
-		433ACF0F29D2422600A3A0A1 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 433ACF0A29D2418A00A3A0A1 /* Charts.framework */; };
 		433ACF1229D2422F00A3A0A1 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AF0A7C29C90A930032A3F0 /* CoreLocation.framework */; };
+		435055E029D262B700EEBEE5 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 435055DF29D262B700EEBEE5 /* Charts */; };
 		43859C1329C9F390009BB939 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43859C1229C9F390009BB939 /* SettingsView.swift */; };
 		43AF0A5229C909520032A3F0 /* SkywireApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A5129C909520032A3F0 /* SkywireApp.swift */; };
 		43AF0A5429C909520032A3F0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A5329C909520032A3F0 /* ContentView.swift */; };
@@ -44,7 +44,6 @@
 
 /* Begin PBXFileReference section */
 		433ACF0829D2412700A3A0A1 /* AltitudeGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltitudeGraphView.swift; sourceTree = "<group>"; };
-		433ACF0A29D2418A00A3A0A1 /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = System/Library/Frameworks/Charts.framework; sourceTree = SDKROOT; };
 		43859C1229C9F390009BB939 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		43AF0A4E29C909520032A3F0 /* Skywire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Skywire.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43AF0A5129C909520032A3F0 /* SkywireApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkywireApp.swift; sourceTree = "<group>"; };
@@ -68,7 +67,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				433ACF1229D2422F00A3A0A1 /* CoreLocation.framework in Frameworks */,
-				433ACF0F29D2422600A3A0A1 /* Charts.framework in Frameworks */,
+				435055E029D262B700EEBEE5 /* Charts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,7 +155,6 @@
 		43AF0A7B29C90A930032A3F0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				433ACF0A29D2418A00A3A0A1 /* Charts.framework */,
 				43AF0A7C29C90A930032A3F0 /* CoreLocation.framework */,
 			);
 			name = Frameworks;
@@ -178,6 +176,9 @@
 			dependencies = (
 			);
 			name = Skywire;
+			packageProductDependencies = (
+				435055DF29D262B700EEBEE5 /* Charts */,
+			);
 			productName = Skywire;
 			productReference = 43AF0A4E29C909520032A3F0 /* Skywire.app */;
 			productType = "com.apple.product-type.application";
@@ -250,6 +251,9 @@
 				Base,
 			);
 			mainGroup = 43AF0A4529C909520032A3F0;
+			packageReferences = (
+				435055DE29D262B700EEBEE5 /* XCRemoteSwiftPackageReference "Charts" */,
+			);
 			productRefGroup = 43AF0A4F29C909520032A3F0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -639,6 +643,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		435055DE29D262B700EEBEE5 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				kind = exactVersion;
+				version = 4.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		435055DF29D262B700EEBEE5 /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 435055DE29D262B700EEBEE5 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 43AF0A4629C909520032A3F0 /* Project object */;
 }

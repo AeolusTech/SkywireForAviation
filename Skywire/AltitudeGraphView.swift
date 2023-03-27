@@ -84,8 +84,25 @@ struct AltitudeGraphView: View {
             let chartData = LineChartData(dataSet: dataSet)
             chartView.data = chartData
             
+            // Customize x-axis value formatter
+            let xAxis = chartView.xAxis
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "HH:mm"
+            xAxis.valueFormatter = DefaultAxisValueFormatter(block: { (value, _) -> String in
+                let date = Date(timeIntervalSince1970: value)
+                return dateFormatter.string(from: date)
+            })
+            
+            // Configure other x-axis properties (optional)
+            xAxis.labelPosition = .bottom
+            xAxis.labelRotationAngle = -45
+            xAxis.drawGridLinesEnabled = false
+            xAxis.forceLabelsEnabled = true
+            xAxis.granularity = 1
+            
             return chartView
         }
+
         
         func updateUIView(_ uiView: LineChartView, context: Context) {
             let dataEntries = recordedData.map { ChartDataEntry(x: $0.date.timeIntervalSince1970, y: $0.altitude) }

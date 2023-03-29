@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @Binding var pollingRate: String
+    @Binding var pollingRate: TimeInterval
     
     @State private var initialPollingRate: String = "0.5"
     @State private var keyboardHeight: CGFloat = 0
@@ -17,7 +17,8 @@ struct SettingsView: View {
         VStack {
             Form {
                 Section(header: Text("Polling Rate")) {
-                    TextField("Enter polling rate", text: $pollingRate)
+                    // TODO: fixme
+                    TextField("Enter polling rate", text: $initialPollingRate)
                         .keyboardType(.decimalPad)
                 }
             }
@@ -52,7 +53,7 @@ struct SettingsView: View {
             .padding(.bottom, keyboardHeight)
         }
         .onAppear {
-            initialPollingRate = pollingRate
+//            initialPollingRate = pollingRate
             NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { (notification) in
                 let value = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
                 let height = value.height
@@ -72,7 +73,7 @@ struct SettingsView: View {
     
     func cancelButtonTapped() {
         // Restore the initial polling rate
-        pollingRate = initialPollingRate
+//        pollingRate = initialPollingRate
         
         // Dismiss the keyboard
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)

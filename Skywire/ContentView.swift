@@ -9,80 +9,82 @@ import SwiftUI
 import MapKit
 import CoreLocation
 
-struct MapView: UIViewRepresentable {
-    @Binding var coordinate: CLLocationCoordinate2D
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
+struct LocationData {
+    var timestamp: TimeInterval
+    var latitude: CLLocationDegrees
+    var longitude: CLLocationDegrees
+    var altitude: CLLocationDistance
+    var heading: CLLocationDirection
+}
+
+class LocationDataRecorder {
+    private var csvHeader: String = "Timestamp,Latitude,Longitude,Altitude,Heading\n"
+    private var csvData: String
+
+    init() {
+        csvData = csvHeader
     }
-    
-    func makeUIView(context: Context) -> MKMapView {
-        let mapView = MKMapView()
-        mapView.delegate = context.coordinator
-        mapView.isScrollEnabled = false
-        mapView.isZoomEnabled = false
-        mapView.isRotateEnabled = false
-        mapView.isPitchEnabled = false
-        mapView.isUserInteractionEnabled = false
-        return mapView
+
+    func saveLocationData(_ locationData: LocationData) {
+        let row = "\(locationData.timestamp),\(locationData.latitude),\(locationData.longitude),\(locationData.altitude),\(locationData.heading)\n"
+        csvData.append(row)
     }
-    
-    func updateUIView(_ uiView: MKMapView, context: Context) {
-        uiView.setCenter(coordinate, animated: true)
-        let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-        let region = MKCoordinateRegion(center: coordinate, span: span)
-        uiView.setRegion(region, animated: true)
-        
-        uiView.removeAnnotations(uiView.annotations)
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = coordinate
-        uiView.addAnnotation(annotation)
+
+    func saveCSVDataToFile() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd_HHmmss"
+        let dateString = dateFormatter.string(from: Date())
+        let fileName = "LocationData_\(dateString).csv"
+
+        let fileManager = FileManager.default
+        if let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
+            let fileURL = documentsURL.appendingPathComponent(fileName)
+
+            do {
+                try csvData.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
+                print("CSV file saved: \(fileURL)")
+                showSuccessAlert()
+            } catch {
+                print("Failed to save CSV file: \(error)")
+            }
+        }
     }
-    
-    class Coordinator: NSObject, MKMapViewDelegate {
-        var parent: MapView
-        
-        init(_ parent: MapView) {
-            self.parent = parent
+
+    private func showSuccessAlert() {
+        let alert = UIAlertController(title: "Success",
+                                      message: "File saved successfully",
+                                      preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: nil))
+
+        if let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            if let rootViewController = firstScene.windows.first?.rootViewController {
+                rootViewController.present(alert, animated: true, completion: nil)
+            }
         }
     }
 }
 
 class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var locationManager = CLLocationManager()
-    private var csvHeader: String = "Timestamp,Latitude,Longitude,Altitude,Heading\n"
-    private var csvData: String
+    private var locationDataRecorder = LocationDataRecorder()
     @Published var currentHeading: CLLocationDirection = 0
     private var timer: Timer?
-    private var isAlertPresented = false
-    private var _pollingRate: String = "0.5" // half a second
-
-    var pollingRate: String {
-        get {
-            return _pollingRate
-        }
-        set {
-            _pollingRate = newValue
+    
+    var pollingRate: TimeInterval = 0.5 {
+        didSet {
             startTimer()
         }
     }
     
-    func startTimer() {
-        print("startTimer log. pollingRate = \(pollingRate)")
+    private func startTimer() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: Double(pollingRate) ?? 1.0, repeats: true) { _ in
+        timer = Timer.scheduledTimer(withTimeInterval: pollingRate, repeats: true) { _ in
             self.saveLocationData()
         }
     }
-
-    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-        locationManagerDidChangeAuthorization(manager)
-        currentHeading = newHeading.magneticHeading
-    }
-    
     
     override init() {
-        csvData = csvHeader
         super.init()
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
@@ -93,227 +95,189 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         startTimer()
     }
     
-    func showSuccessAlert() {
-        guard !isAlertPresented else { return }
-        let alert = UIAlertController(title: "Success",
-                                      message: "File saved successfully",
-                                      preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: {
-            _ in self.isAlertPresented = false
-        }))
-        
-        if let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let rootViewController = firstScene.windows.first?.rootViewController {
-                rootViewController.present(alert, animated: true, completion: nil)
-            }
-        }
-        isAlertPresented = true // Set the flag to true to indicate that an alert is being presented
-    }
-    
-    func showLocationAccessMessage() {
-        guard !isAlertPresented else { return } // Check if an alert is already being presented
-        let message = "To record your location data, you need to allow Always location access in the Settings app."
-        let alert = UIAlertController(title: "Location Access", message: message, preferredStyle: .alert)
-        let settingsAction = UIAlertAction(title: "Go to Settings", style: .default) { _ in
-            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
-                return
-            }
-
-            if UIApplication.shared.canOpenURL(settingsUrl) {
-                UIApplication.shared.open(settingsUrl, completionHandler: nil)
-            }
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alert.addAction(settingsAction)
-        alert.addAction(cancelAction)
-        
-        if let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let rootViewController = firstScene.windows.first?.rootViewController {
-                rootViewController.present(alert, animated: true, completion: nil)
-            }
-        }
-        isAlertPresented = true
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        locationManagerDidChangeAuthorization(manager)
+        currentHeading = newHeading.magneticHeading
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        switch manager.authorizationStatus {
+        switch manager.authorizationStatus
+        {
         case .authorizedWhenInUse:
-            locationManager.requestAlwaysAuthorization() // request "Always" authorization after initial "While Using the App" authorization is granted
+            locationManager.requestAlwaysAuthorization()
         case .authorizedAlways:
             locationManager.startUpdatingLocation()
-            isAlertPresented = false
         default:
-            showLocationAccessMessage()
+            break
         }
     }
-
     
     func saveLocationData() {
         if recording, let location = locationManager.location {
-            let timestamp = Date().timeIntervalSince1970
-            let latitude = location.coordinate.latitude
-            let longitude = location.coordinate.longitude
-            let altitude = location.altitude
-            let heading = currentHeading
-            
-            let row = "\(timestamp),\(latitude),\(longitude),\(altitude),\(heading)\n"
-            csvData.append(row)
+            let locationData = LocationData(timestamp: Date().timeIntervalSince1970,
+                                            latitude: location.coordinate.latitude,
+                                            longitude: location.coordinate.longitude,
+                                            altitude: location.altitude,
+                                            heading: currentHeading)
+            locationDataRecorder.saveLocationData(locationData)
         }
     }
     
     func saveCSVDataToFile() {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyyMMdd_HHmmss"
-        let dateString = dateFormatter.string(from: Date())
-        let fileName = "LocationData_\(dateString).csv"
-        
-        let fileManager = FileManager.default
-        if let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
-            let fileURL = documentsURL.appendingPathComponent(fileName)
-            
-            do {
-                try csvData.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
-                print("CSV file saved: \(fileURL)")
-                showSuccessAlert()
-            } catch {
-                print("Failed to save CSV file: \(error)")
-            }
-        }
+        locationDataRecorder.saveCSVDataToFile()
     }
     
     @Published var recording = false
-
+    
     func startRecording() {
         recording = true
     }
-
+    
     func stopRecording() {
         recording = false
         saveCSVDataToFile()
-        csvData = csvHeader
+    }
+}
+
+struct MapView: UIViewRepresentable {
+    @Binding var coordinate: CLLocationCoordinate2D
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    func makeUIView(context: Context) -> MKMapView {
+        let mapView = MKMapView()
+        mapView.delegate = context.coordinator
+        mapView.isScrollEnabled = false
+        mapView.isZoomEnabled = false
+        mapView.isRotateEnabled = false
+        mapView.isPitchEnabled = false
+        mapView.isUserInteractionEnabled = false
+        return mapView
+    }
+
+    func updateUIView(_ uiView: MKMapView, context: Context) {
+        uiView.setCenter(coordinate, animated: true)
+        let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+        let region = MKCoordinateRegion(center: coordinate, span: span)
+        uiView.setRegion(region, animated: true)
+
+        uiView.removeAnnotations(uiView.annotations)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        uiView.addAnnotation(annotation)
+    }
+
+    class Coordinator: NSObject, MKMapViewDelegate {
+        var parent: MapView
+
+        init(_ parent: MapView) {
+            self.parent = parent
+        }
     }
 }
 
 struct ContentView: View {
-    @StateObject private var locationViewModel = LocationViewModel()
-    
-    var shouldShowLocationWarning: Bool {
-        return locationViewModel.locationManager.authorizationStatus != .authorizedAlways
-    }
-    
-    var canStartRecording: Bool {
-        return locationViewModel.locationManager.authorizationStatus == .authorizedAlways
-    }
-    
+@StateObject private var locationViewModel = LocationViewModel()
     var body: some View {
         VStack {
-            if shouldShowLocationWarning {
-                HStack {
-                    Image(systemName: "exclamationmark.triangle.fill")
-                        .foregroundColor(.red)
-                    Text("Location access is required to record data.")
-                        .font(.headline)
-                        .foregroundColor(.red)
-                }
-                .padding(.horizontal)
-                .padding(.top)
-                .onTapGesture {
-                    if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
-                        UIApplication.shared.open(settingsURL)
-                    }
-                }
-            }
             MapView(coordinate: .constant(locationViewModel.locationManager.location?.coordinate ?? CLLocationCoordinate2D()))
                 .frame(height: 300)
-            
+
             Text("Location Tracker")
                 .font(.largeTitle)
                 .padding()
-            
-            if !locationViewModel.recording {
-                if canStartRecording {
-                    Button(action: {
-                        locationViewModel.startRecording()
-                    }) {
-                        Text("Record position")
-                            .font(.title)
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                            .padding()
-                            .background(Color.green)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                    }
-                    .padding(.horizontal)
-                } else {
-                    Button(action: {
-                        locationViewModel.showLocationAccessMessage()
-                    }) {
-                        Text("Record position blocked")
-                            .font(.title)
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                            .padding()
-                            .background(Color.gray)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                    }
-                    .padding(.horizontal)
-                }
-            } else {
-                Button(action: {
-                    locationViewModel.stopRecording()
-                }) {
-                    Text("Stop recording")
-                        .font(.title)
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .padding()
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                .padding(.horizontal)
+
+            RecordButton(locationViewModel: locationViewModel)
+
+            LocationInfoView(locationViewModel: locationViewModel)
+        }
+    }
+}
+
+struct LocationInfoView: View {
+    @ObservedObject var locationViewModel: LocationViewModel
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Text("Latitude:")
+                    .font(.headline)
+                Spacer()
+                Text("\(locationViewModel.locationManager.location?.coordinate.latitude ?? 0, specifier: "%.6f")")
+                    .font(.body)
             }
-            VStack(alignment: .leading, spacing: 10) {
-                HStack {
-                    Text("Latitude:")
-                        .font(.headline)
-                    Spacer()
-                    Text("\(locationViewModel.locationManager.location?.coordinate.latitude ?? 0, specifier: "%.6f")")
-                        .font(.body)
-                }
-                HStack {
-                    Text("Longitude:")
-                        .font(.headline)
-                    Spacer()
-                    Text("\(locationViewModel.locationManager.location?.coordinate.longitude ?? 0, specifier: "%.6f")")
-                        .font(.body)
-                }
-                HStack {
-                    Text("Altitude:")
-                        .font(.headline)
-                    Spacer()
-                    Text("\((locationViewModel.locationManager.location?.altitude ?? 0) * 3.28084, specifier: "%.2f") ft")
-                        .font(.body)
-                }
-                HStack {
-                    Text("Speed:")
-                        .font(.headline)
-                    Spacer()
-                    Text("\((locationViewModel.locationManager.location?.speed ?? 0) * 1.94384, specifier: "%.2f") knots")
-                        .font(.body)
-                }
-                HStack {
-                    Text("Magnetic Heading:")
-                        .font(.headline)
-                    Spacer()
-                    Text("\(Int(locationViewModel.currentHeading))°")
-                        .font(.body)
-                }
+            HStack {
+                Text("Longitude:")
+                    .font(.headline)
+                Spacer()
+                Text("\(locationViewModel.locationManager.location?.coordinate.longitude ?? 0, specifier: "%.6f")")
+                    .font(.body)
+            }
+            HStack {
+                Text("Altitude:")
+                    .font(.headline)
+                Spacer()
+                Text("\((locationViewModel.locationManager.location?.altitude ?? 0) * 3.28084, specifier: "%.2f") ft")
+                    .font(.body)
+            }
+            HStack {
+                Text("Speed:")
+                    .font(.headline)
+                Spacer()
+                Text("\((locationViewModel.locationManager.location?.speed ?? 0) * 1.94384, specifier: "%.2f") knots")
+                    .font(.body)
+            }
+            HStack {
+                Text("Magnetic Heading:")
+                    .font(.headline)
+                Spacer()
+                Text("\(Int(locationViewModel.currentHeading))°")
+                    .font(.body)
+            }
+        }
+        .padding(.horizontal)
+    }
+}
+
+struct RecordButton: View {
+    @ObservedObject var locationViewModel: LocationViewModel
+    var body: some View {
+        if !locationViewModel.recording {
+            Button(action: {
+                locationViewModel.startRecording()
+            }) {
+                Text("Record position")
+                    .font(.title)
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .padding()
+                    .background(Color.green)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+            .padding(.horizontal)
+        } else {
+            Button(action: {
+                locationViewModel.stopRecording()
+            }) {
+                Text("Stop recording")
+                    .font(.title)
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .padding()
+                    .background(Color.red)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
             }
             .padding(.horizontal)
         }
     }
 }
+
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}
+
 

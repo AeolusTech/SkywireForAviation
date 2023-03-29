@@ -90,6 +90,7 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.allowsBackgroundLocationUpdates = true
         locationManager.startUpdatingLocation()
         locationManager.startUpdatingHeading()
         

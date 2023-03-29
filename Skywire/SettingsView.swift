@@ -8,75 +8,49 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @Binding var pollingRate: TimeInterval
-    
-    @State private var initialPollingRate: String = "0.5"
-    @State private var keyboardHeight: CGFloat = 0
-    
+    @EnvironmentObject var locationViewModel: LocationViewModel
+
     var body: some View {
-        VStack {
-            Form {
-                Section(header: Text("Polling Rate")) {
-                    // TODO: fixme
-                    TextField("Enter polling rate", text: $initialPollingRate)
-                        .keyboardType(.decimalPad)
-                }
-            }
-            
+        VStack(alignment: .leading, spacing: 10) {
             HStack {
                 Spacer()
-                
+
                 Button(action: {
-                    saveButtonTapped()
+                    locationViewModel.pollingRate = max(locationViewModel.pollingRate - 0.1, 0.1)
                 }) {
-                    Text("Save")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                    Image(systemName: "minus.circle")
+                        .font(.largeTitle)
+                        .foregroundColor(.blue)
                 }
-                .padding()
-                
+
+                Form {
+                    Section(header: Text("Polling Rate")) {
+                        Text("\(locationViewModel.pollingRate, specifier: "%.1f") s")
+                            .font(.title)
+                    }
+                }
+
                 Button(action: {
-                    cancelButtonTapped()
+                    locationViewModel.pollingRate = min(locationViewModel.pollingRate + 0.1, 2.0)
                 }) {
-                    Text("Cancel")
-                        .padding()
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                    Image(systemName: "plus.circle")
+                        .font(.largeTitle)
+                        .foregroundColor(.blue)
                 }
-                .padding()
-                
+
                 Spacer()
             }
-            .padding(.bottom, keyboardHeight)
+            .padding(.horizontal)
         }
-        .onAppear {
-//            initialPollingRate = pollingRate
-            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { (notification) in
-                let value = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
-                let height = value.height
-                keyboardHeight = height
-            }
-            
-            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { (notification) in
-                keyboardHeight = 0
-            }
-        }
+        .padding(.vertical)
     }
-    
-    func saveButtonTapped() {
-        // Dismiss the keyboard
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
-    
-    func cancelButtonTapped() {
-        // Restore the initial polling rate
-//        pollingRate = initialPollingRate
-        
-        // Dismiss the keyboard
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+}
+
+
+
+struct SettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SettingsView()
     }
 }
 

@@ -72,7 +72,7 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var currentLocation: CLLocation?
     private var timer: Timer?
     
-    var pollingRate: TimeInterval = 0.5 {
+    @Published var pollingRate: TimeInterval = 0.5 {
         didSet {
             startTimer()
         }
@@ -102,6 +102,12 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         if let location = locations.last {
             currentLocation = location
         }
+    }
+    
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        locationManagerDidChangeAuthorization(manager)
+        currentHeading = newHeading.magneticHeading
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {

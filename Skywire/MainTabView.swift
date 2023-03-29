@@ -24,7 +24,7 @@ struct MainTabView: View {
                     Image(systemName: "doc.text.fill")
                     Text("Recorded Files")
                 }
-            SettingsView(pollingRate: $locationViewModel.pollingRate)
+            SettingsView()
                 .tabItem {
                     Image(systemName: "gear")
                     Text("Settings")

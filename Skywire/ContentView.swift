@@ -69,6 +69,7 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var locationManager = CLLocationManager()
     private var locationDataRecorder = LocationDataRecorder()
     @Published var currentHeading: CLLocationDirection = 0
+    @Published var currentLocation: CLLocation?
     private var timer: Timer?
     
     var pollingRate: TimeInterval = 0.5 {
@@ -95,9 +96,11 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         startTimer()
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locationManagerDidChangeAuthorization(manager)
-        currentHeading = newHeading.magneticHeading
+        if let location = locations.last {
+            currentLocation = location
+        }
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
@@ -182,7 +185,7 @@ struct ContentView: View {
 @StateObject private var locationViewModel = LocationViewModel()
     var body: some View {
         VStack {
-            MapView(coordinate: .constant(locationViewModel.locationManager.location?.coordinate ?? CLLocationCoordinate2D()))
+            MapView(coordinate: .constant(locationViewModel.currentLocation?.coordinate ?? CLLocationCoordinate2D()))
                 .frame(height: 300)
 
             Text("Location Tracker")

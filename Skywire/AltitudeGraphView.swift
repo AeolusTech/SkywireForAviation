@@ -100,6 +100,12 @@ struct AltitudeGraphView: View {
             xAxis.forceLabelsEnabled = true
             xAxis.granularity = 1
             
+            // Add gradient marker
+            let gradientMarker = GradientMarkerView()
+            gradientMarker.chartView = chartView
+            gradientMarker.recordedData = recordedData
+            chartView.marker = gradientMarker
+            
             return chartView
         }
 
@@ -122,4 +128,49 @@ struct AltitudeGraphView: View {
             }
         }
     }
+    
+    class GradientMarkerView: MarkerView {
+        var recordedData: [RecordedData] = []
+        private var labelText: String = ""
+
+        override func refreshContent(entry: ChartDataEntry, highlight: Highlight) {
+            super.refreshContent(entry: entry, highlight: highlight)
+            
+            if let index = recordedData.firstIndex(where: { $0.date.timeIntervalSince1970 == entry.x }) {
+                if index > 0 {
+                    let deltaTime = recordedData[index].date.timeIntervalSince(recordedData[index - 1].date)
+                    let deltaAltitude = recordedData[index].altitude - recordedData[index - 1].altitude
+                    
+                    if deltaTime != 0 {
+                        let gradient = deltaAltitude / deltaTime
+                        labelText = String(format: "Gradient: %.2f m/s", gradient)
+                    }
+                }
+            }
+        }
+        
+        override func draw(context: CGContext, point: CGPoint) {
+            let boxRect = CGRect(
+                x: point.x - (labelText.size(withAttributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)]).width / 2) - 8,
+                y: point.y - 36,
+                width: labelText.size(withAttributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)]).width + 16,
+                height: 24
+            )
+
+            context.setFillColor(UIColor.systemGray.cgColor)
+            context.fill(CGRect(origin: boxRect.origin, size: boxRect.size))
+            
+            labelText.draw(
+                with: CGRect(origin: CGPoint(x: boxRect.origin.x + 8, y: boxRect.origin.y + 4), size: boxRect.size),
+                options: .usesLineFragmentOrigin,
+                attributes: [
+                    NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12),
+                    NSAttributedString.Key.foregroundColor: UIColor.white
+                ],
+                context: nil
+            )
+        }
+    }
+
+
 }

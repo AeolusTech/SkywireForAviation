@@ -9,6 +9,8 @@ import Charts
 import SwiftUI
 
 struct AltitudeGraphView: View {
+    @State private var isFeetPerMinute = false
+
     struct RecordedData: Identifiable {
         let id = UUID()
         let date: Date
@@ -40,8 +42,13 @@ struct AltitudeGraphView: View {
             Text("Date created: " + fileCreationDateString())
                 .font(.caption)
         
-            AltitudeChartView(recordedData: recordedData)
+            AltitudeChartView(recordedData: recordedData, isFeetPerMinute: $isFeetPerMinute)
                 .frame(height: 300)
+
+            Toggle(isOn: $isFeetPerMinute) {
+                Text("Show gradient in ft/min")
+            }
+            .padding(.top)
         }
     }
     
@@ -64,6 +71,7 @@ struct AltitudeGraphView: View {
     
     struct AltitudeChartView: UIViewRepresentable {
         var recordedData: [RecordedData]
+        @Binding var isFeetPerMinute: Bool
         
         func makeUIView(context: Context) -> LineChartView {
             let chartView = LineChartView()
@@ -104,6 +112,7 @@ struct AltitudeGraphView: View {
             let gradientMarker = GradientMarkerView()
             gradientMarker.chartView = chartView
             gradientMarker.recordedData = recordedData
+            gradientMarker.isFeetPerMinute = isFeetPerMinute
             chartView.marker = gradientMarker
             
             return chartView
@@ -126,28 +135,39 @@ struct AltitudeGraphView: View {
                 let chartData = LineChartData(dataSet: dataSet)
                 uiView.data = chartData
             }
+            if let gradientMarker = uiView.marker as? GradientMarkerView {
+                gradientMarker.isFeetPerMinute = isFeetPerMinute
+            }
         }
     }
     
     class GradientMarkerView: MarkerView {
         var recordedData: [RecordedData] = []
+        var isFeetPerMinute: Bool = false
         private var labelText: String = ""
 
         override func refreshContent(entry: ChartDataEntry, highlight: Highlight) {
             super.refreshContent(entry: entry, highlight: highlight)
-            
+
             if let index = recordedData.firstIndex(where: { $0.date.timeIntervalSince1970 == entry.x }) {
                 if index > 0 {
                     let deltaTime = recordedData[index].date.timeIntervalSince(recordedData[index - 1].date)
                     let deltaAltitude = recordedData[index].altitude - recordedData[index - 1].altitude
-                    
+
                     if deltaTime != 0 {
                         let gradient = deltaAltitude / deltaTime
-                        labelText = String(format: "Gradient: %.2f m/s", gradient)
+
+                        if isFeetPerMinute {
+                            let gradientInFeetPerMinute = gradient * 196.8504
+                            labelText = String(format: "Gradient: %.2f ft/min", gradientInFeetPerMinute)
+                        } else {
+                            labelText = String(format: "Gradient: %.2f m/s", gradient)
+                        }
                     }
                 }
             }
         }
+
         
         override func draw(context: CGContext, point: CGPoint) {
             let boxRect = CGRect(

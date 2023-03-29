@@ -9,7 +9,8 @@ import Charts
 import SwiftUI
 
 struct AltitudeGraphView: View {
-    @State private var isFeetPerMinute = false
+    @State private var selectedUnit = 0
+    private let units = ["m/s", "ft/min", "%"]
 
     struct RecordedData: Identifiable {
         let id = UUID()
@@ -42,12 +43,15 @@ struct AltitudeGraphView: View {
             Text("Date created: " + fileCreationDateString())
                 .font(.caption)
         
-            AltitudeChartView(recordedData: recordedData, isFeetPerMinute: $isFeetPerMinute)
+            AltitudeChartView(recordedData: recordedData, selectedUnit: $selectedUnit)
                 .frame(height: 300)
 
-            Toggle(isOn: $isFeetPerMinute) {
-                Text("Show gradient in ft/min")
+            Picker("Gradient Units:", selection: $selectedUnit) {
+                ForEach(0 ..< units.count) {
+                    Text(self.units[$0])
+                }
             }
+            .pickerStyle(SegmentedPickerStyle())
             .padding(.top)
         }
     }
@@ -71,7 +75,7 @@ struct AltitudeGraphView: View {
     
     struct AltitudeChartView: UIViewRepresentable {
         var recordedData: [RecordedData]
-        @Binding var isFeetPerMinute: Bool
+        @Binding var selectedUnit: Int
         
         func makeUIView(context: Context) -> LineChartView {
             let chartView = LineChartView()
@@ -112,7 +116,7 @@ struct AltitudeGraphView: View {
             let gradientMarker = GradientMarkerView()
             gradientMarker.chartView = chartView
             gradientMarker.recordedData = recordedData
-            gradientMarker.isFeetPerMinute = isFeetPerMinute
+            gradientMarker.selectedUnit = selectedUnit
             chartView.marker = gradientMarker
             
             return chartView
@@ -136,14 +140,14 @@ struct AltitudeGraphView: View {
                 uiView.data = chartData
             }
             if let gradientMarker = uiView.marker as? GradientMarkerView {
-                gradientMarker.isFeetPerMinute = isFeetPerMinute
+                gradientMarker.selectedUnit = selectedUnit
             }
         }
     }
     
     class GradientMarkerView: MarkerView {
         var recordedData: [RecordedData] = []
-        var isFeetPerMinute: Bool = false
+        var selectedUnit: Int = 0
         private var labelText: String = ""
 
         override func refreshContent(entry: ChartDataEntry, highlight: Highlight) {
@@ -157,17 +161,20 @@ struct AltitudeGraphView: View {
                     if deltaTime != 0 {
                         let gradient = deltaAltitude / deltaTime
 
-                        if isFeetPerMinute {
+                        switch selectedUnit {
+                        case 1: // ft/min
                             let gradientInFeetPerMinute = gradient * 196.8504
                             labelText = String(format: "Gradient: %.2f ft/min", gradientInFeetPerMinute)
-                        } else {
+                        case 2: // %
+                            let gradientPercentage = (deltaAltitude / deltaTime) * 100
+                            labelText = String(format: "Gradient: %.2f %%", gradientPercentage)
+                        default: // m/s
                             labelText = String(format: "Gradient: %.2f m/s", gradient)
                         }
                     }
                 }
             }
         }
-
         
         override func draw(context: CGContext, point: CGPoint) {
             let boxRect = CGRect(

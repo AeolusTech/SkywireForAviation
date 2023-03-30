@@ -43,6 +43,7 @@ class LocationDataRecorder {
             do {
                 try csvData.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
                 print("CSV file saved: \(fileURL)")
+                csvData = csvHeader
                 showSuccessAlert()
             } catch {
                 print("Failed to save CSV file: \(error)")
@@ -72,19 +73,6 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var currentLocation: CLLocation?
     private var timer: Timer?
     
-    @Published var pollingRate: TimeInterval = 0.5 {
-        didSet {
-            startTimer()
-        }
-    }
-    
-    private func startTimer() {
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: pollingRate, repeats: true) { _ in
-            self.saveLocationData()
-        }
-    }
-    
     override init() {
         super.init()
         locationManager.delegate = self
@@ -93,8 +81,13 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.startUpdatingLocation()
         locationManager.startUpdatingHeading()
-        
-        startTimer()
+    }
+    
+    func startTimer(pollingRate: TimeInterval) {
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: pollingRate, repeats: true) { _ in
+            self.saveLocationData()
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -189,7 +182,7 @@ struct MapView: UIViewRepresentable {
 }
 
 struct ContentView: View {
-@StateObject private var locationViewModel = LocationViewModel()
+    @EnvironmentObject var locationViewModel: LocationViewModel
     var body: some View {
         VStack {
             MapView(coordinate: .constant(locationViewModel.currentLocation?.coordinate ?? CLLocationCoordinate2D()))
@@ -287,6 +280,7 @@ struct RecordButton: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(LocationViewModel())
     }
 }
 

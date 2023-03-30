@@ -128,3 +128,10 @@ struct RecordedFilesView: View {
         }
     }
 }
+
+
+struct RecordedFilesView_Previews: PreviewProvider {
+    static var previews: some View {
+        RecordedFilesView()
+    }
+}

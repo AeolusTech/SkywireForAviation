@@ -8,15 +8,16 @@
 import SwiftUI
 
 struct MainTabView: View {
-    @EnvironmentObject var locationViewModel: LocationViewModel
-    
+    @StateObject var locationViewModel = LocationViewModel()
+    @State private var pollingRate: TimeInterval = 0.5
+
     var body: some View {
         TabView {
             ContentView()
                 .environmentObject(locationViewModel)
                 .tabItem {
-                    Image(systemName: "location.fill")
-                    Text("Location Tracker")
+                    Image(systemName: "location")
+                    Text("Location")
                 }
             
             RecordedFilesView()
@@ -24,14 +25,21 @@ struct MainTabView: View {
                     Image(systemName: "doc.text.fill")
                     Text("Recorded Files")
                 }
-            SettingsView()
+            SettingsView(pollingRate: $pollingRate)
                 .tabItem {
                     Image(systemName: "gear")
                     Text("Settings")
                 }
         }
+        .onAppear {
+            locationViewModel.startTimer(pollingRate: pollingRate)
+        }
+        .onChange(of: pollingRate) { newPollingRate in
+            locationViewModel.startTimer(pollingRate: newPollingRate)
+        }
     }
 }
+
 
 struct MainTabView_Previews: PreviewProvider {
     static var previews: some View {
@@ -39,4 +47,3 @@ struct MainTabView_Previews: PreviewProvider {
             .environmentObject(LocationViewModel())
     }
 }
-

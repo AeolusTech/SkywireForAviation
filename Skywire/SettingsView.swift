@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @EnvironmentObject var locationViewModel: LocationViewModel
+    @Binding var pollingRate: TimeInterval
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -16,7 +16,7 @@ struct SettingsView: View {
                 Spacer()
 
                 Button(action: {
-                    locationViewModel.pollingRate = max(locationViewModel.pollingRate - 0.1, 0.1)
+                    pollingRate = max(pollingRate - 0.1, 0.1)
                 }) {
                     Image(systemName: "minus.circle")
                         .font(.largeTitle)
@@ -25,13 +25,13 @@ struct SettingsView: View {
 
                 Form {
                     Section(header: Text("Polling Rate")) {
-                        Text("\(locationViewModel.pollingRate, specifier: "%.1f") s")
+                        Text("\(pollingRate, specifier: "%.1f") s")
                             .font(.title)
                     }
                 }
 
                 Button(action: {
-                    locationViewModel.pollingRate = min(locationViewModel.pollingRate + 0.1, 2.0)
+                    pollingRate = min(pollingRate + 0.1, 2.0)
                 }) {
                     Image(systemName: "plus.circle")
                         .font(.largeTitle)
@@ -47,10 +47,10 @@ struct SettingsView: View {
 }
 
 
-
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        let pollingRate = Binding.constant(0.5)
+        return SettingsView(pollingRate: pollingRate)
     }
 }
 

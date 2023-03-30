@@ -198,6 +198,12 @@ struct AltitudeGraphView: View {
             )
         }
     }
+}
 
 
+struct AltitudeGraphView_Previews: PreviewProvider {
+    static var previews: some View {
+        AltitudeGraphView(fileURL: URL(filePath: ""))
+            .environmentObject(LocationViewModel())
+    }
 }

@@ -157,6 +157,7 @@ struct MapView: UIViewRepresentable {
         mapView.isRotateEnabled = false
         mapView.isPitchEnabled = false
         mapView.isUserInteractionEnabled = false
+        mapView.accessibilityIdentifier = "mapView"
         return mapView
     }
 

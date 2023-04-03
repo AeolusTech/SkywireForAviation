@@ -18,12 +18,19 @@ struct LocationData {
     var heading: CLLocationDirection
 }
 
+protocol NetworkSession {
+    func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask
+}
+extension URLSession: NetworkSession { }
+
 class LocationDataRecorder {
     private var csvHeader: String = "Timestamp,Latitude,Longitude,Altitude,Heading\n"
     private var csvData: String
+    private var networkSession: NetworkSession
 
-    init() {
-        csvData = csvHeader
+    init(networkSession: NetworkSession = URLSession.shared) {
+        self.networkSession = networkSession
+        self.csvData = self.csvHeader
     }
 
     func saveLocationData(_ locationData: LocationData) {
@@ -64,7 +71,7 @@ class LocationDataRecorder {
             request.setValue("text/csv", forHTTPHeaderField: "Content-Type")
             request.setValue("lot-from-mobile.csv", forHTTPHeaderField: "Content-Disposition")
             
-            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            let task = networkSession.dataTask(with: request) { data, response, error in
                 if let error = error {
                     print("Error uploading file: \(error)")
                 } else if let response = response as? HTTPURLResponse, response.statusCode == 200 {

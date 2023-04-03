@@ -8,6 +8,7 @@
 import SwiftUI
 import MapKit
 import CoreLocation
+import Combine
 
 struct LocationData {
     var timestamp: TimeInterval
@@ -44,23 +45,53 @@ class LocationDataRecorder {
                 try csvData.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
                 print("CSV file saved: \(fileURL)")
                 csvData = csvHeader
-                showSuccessAlert()
+                uploadCSVDataToS3(fileURL: fileURL)
             } catch {
-                print("Failed to save CSV file: \(error)")
+                print("Failed to save CSV file: (error)")
             }
+        }
+    }
+    
+    func uploadCSVDataToS3(fileURL: URL) {
+        let endpoint = "https://5ktfkrdjuk.execute-api.eu-central-1.amazonaws.com/default/upload-flight-to-storage"
+        guard let url = URL(string: endpoint) else { return }
+        
+        do {
+            let fileData = try Data(contentsOf: fileURL)
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.httpBody = fileData
+            request.setValue("text/csv", forHTTPHeaderField: "Content-Type")
+            request.setValue("lot-from-mobile.csv", forHTTPHeaderField: "Content-Disposition")
+            
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    print("Error uploading file: \(error)")
+                } else if let response = response as? HTTPURLResponse, response.statusCode == 200 {
+                    print("File uploaded successfully")
+                    DispatchQueue.main.async {
+                        self.showSuccessAlert()
+                    }
+                } else {
+                    print("Unexpected response: \(String(describing: response))")
+                }
+            }
+            task.resume()
+        } catch {
+            print("Error reading file data: \(error)")
         }
     }
 
     private func showSuccessAlert() {
-        let alert = UIAlertController(title: "Success",
-                                      message: "File saved successfully",
-                                      preferredStyle: .alert)
-
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: nil))
+        let alert = UIAlertController(title: "Success", message: "File saved and uploaded successfully", preferredStyle: .alert)
 
         if let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
             if let rootViewController = firstScene.windows.first?.rootViewController {
-                rootViewController.present(alert, animated: true, completion: nil)
+                rootViewController.present(alert, animated: true, completion: {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        alert.dismiss(animated: true, completion: nil)
+                    }
+                })
             }
         }
     }

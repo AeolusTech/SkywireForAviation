@@ -47,8 +47,8 @@ struct AltitudeGraphView: View {
                 .frame(height: 300)
 
             Picker("Gradient Units:", selection: $selectedUnit) {
-                ForEach(0 ..< units.count) {
-                    Text(self.units[$0])
+                ForEach(units.indices, id: \.self) { index in
+                    Text(units[index])
                 }
             }
             .pickerStyle(SegmentedPickerStyle())

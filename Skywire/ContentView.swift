@@ -228,7 +228,7 @@ struct LocationInfoView: View {
                 Text("Speed:")
                     .font(.headline)
                 Spacer()
-                Text("\((locationViewModel.locationManager.location?.speed ?? 0) * 1.94384, specifier: "%.2f") knots")
+                Text("\(max((locationViewModel.locationManager.location?.speed ?? 0) * 1.94384, 0), specifier: "%.2f") knots")
                     .font(.body)
             }
             HStack {

@@ -44,7 +44,6 @@
 
 /* Begin PBXFileReference section */
 		433ACF0829D2412700A3A0A1 /* AltitudeGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltitudeGraphView.swift; sourceTree = "<group>"; };
-		43619C9029DB5615003926C2 /* Skywire.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = Skywire.xctestplan; path = ../Skywire.xctestplan; sourceTree = "<group>"; };
 		43859C1229C9F390009BB939 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		43AF0A4E29C909520032A3F0 /* Skywire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Skywire.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43AF0A5129C909520032A3F0 /* SkywireApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkywireApp.swift; sourceTree = "<group>"; };
@@ -60,6 +59,7 @@
 		43AF0A8729C9B1520032A3F0 /* RecordedFilesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordedFilesView.swift; sourceTree = "<group>"; };
 		43AF0A8929C9B1F40032A3F0 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		43AF0A8B29C9B32D0032A3F0 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
+		43E92FC029E17B5C009802CE /* Skywire.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Skywire.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,7 +94,7 @@
 		43AF0A4529C909520032A3F0 = {
 			isa = PBXGroup;
 			children = (
-				43619C9029DB5615003926C2 /* Skywire.xctestplan */,
+				43E92FC029E17B5C009802CE /* Skywire.xctestplan */,
 				43AF0A5029C909520032A3F0 /* Skywire */,
 				43AF0A6129C909540032A3F0 /* SkywireTests */,
 				43AF0A6B29C909540032A3F0 /* SkywireUITests */,

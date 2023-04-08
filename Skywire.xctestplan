@@ -1,0 +1,31 @@
+{
+  "configurations" : [
+    {
+      "id" : "0DE7AF79-8E06-4554-81EC-4E4DAB65A786",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Skywire.xcodeproj",
+        "identifier" : "43AF0A5D29C909540032A3F0",
+        "name" : "SkywireTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Skywire.xcodeproj",
+        "identifier" : "43AF0A6729C909540032A3F0",
+        "name" : "SkywireUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

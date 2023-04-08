@@ -29,7 +29,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:../Skywire.xctestplan"
+            reference = "container:Skywire.xctestplan"
             default = "YES">
          </TestPlanReference>
       </TestPlans>

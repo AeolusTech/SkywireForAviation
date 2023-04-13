@@ -60,7 +60,7 @@ class LocationDataRecorder {
     }
     
     func uploadCSVDataToS3(fileURL: URL) {
-        let endpoint = "https://5ktfkrdjuk.execute-api.eu-central-1.amazonaws.com/default/upload-flight-to-storage"
+        let endpoint = "https://5ktfkrdjuk.execute-api.eu-central-1.amazonaws.com/default/upload-flight-to-storage-v2"
         guard let url = URL(string: endpoint) else { return }
         
         do {
@@ -75,7 +75,7 @@ class LocationDataRecorder {
                 if let error = error {
                     print("Error uploading file: \(error)")
                 } else if let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                    print("File uploaded successfully")
+                    print("File uploaded successfully \(response)")
                     DispatchQueue.main.async {
                         self.showSuccessAlert()
                     }

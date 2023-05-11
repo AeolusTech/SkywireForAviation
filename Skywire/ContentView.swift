@@ -110,6 +110,11 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var currentHeading: CLLocationDirection = 0
     @Published var currentLocation: CLLocation?
     private var timer: Timer?
+    var authorizationStatusProvider: (() -> CLAuthorizationStatus)?
+
+    var authorizationStatus: CLAuthorizationStatus {
+        return authorizationStatusProvider?() ?? locationManager.authorizationStatus
+    }
     
     override init() {
         super.init()
@@ -222,8 +227,29 @@ struct MapView: UIViewRepresentable {
 
 struct ContentView: View {
     @EnvironmentObject var locationViewModel: LocationViewModel
+    
+    var shouldShowLocationWarning: Bool {
+        return locationViewModel.locationManager.authorizationStatus != .authorizedAlways
+    }
+    
     var body: some View {
         VStack {
+            if shouldShowLocationWarning {
+                HStack {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundColor(.red)
+                    Text("Location access is required to record data.")
+                        .font(.headline)
+                        .foregroundColor(.red)
+                }
+                .padding(.horizontal)
+                .padding(.top)
+                .onTapGesture {
+                    if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(settingsURL)
+                    }
+                }
+            }
             MapView(coordinate: .constant(locationViewModel.currentLocation?.coordinate ?? CLLocationCoordinate2D()))
                 .frame(height: 300)
 
@@ -284,20 +310,65 @@ struct LocationInfoView: View {
 
 struct RecordButton: View {
     @ObservedObject var locationViewModel: LocationViewModel
+    
+    var canStartRecording: Bool {
+        return locationViewModel.locationManager.authorizationStatus == .authorizedAlways
+    }
+    
+    func showLocationAccessMessage() {
+        let message = "To record your location data, you need to allow Always location access in the Settings app."
+        let alert = UIAlertController(title: "Location Access", message: message, preferredStyle: .alert)
+        let settingsAction = UIAlertAction(title: "Go to Settings", style: .default) { _ in
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl, completionHandler: nil)
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(settingsAction)
+        alert.addAction(cancelAction)
+        
+        if let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            if let rootViewController = firstScene.windows.first?.rootViewController {
+                rootViewController.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
     var body: some View {
         if !locationViewModel.recording {
-            Button(action: {
-                locationViewModel.startRecording()
-            }) {
-                Text("Record position")
-                    .font(.title)
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .padding()
-                    .background(Color.green)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+            if canStartRecording {
+                Button(action: {
+                    locationViewModel.startRecording()
+                }) {
+                    Text("Record position")
+                        .font(.title)
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        .background(Color.green)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .padding(.horizontal)
+            } else {
+                Button(action: {
+                    showLocationAccessMessage()
+                }) {
+                    Text("Location access not allowed")
+                        .font(.title)
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        .background(Color.gray)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
         } else {
             Button(action: {
                 locationViewModel.stopRecording()

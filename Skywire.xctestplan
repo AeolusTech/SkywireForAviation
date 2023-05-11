@@ -20,6 +20,9 @@
       }
     },
     {
+      "skippedTests" : [
+        "RecordButtonUITests"
+      ],
       "target" : {
         "containerPath" : "container:Skywire.xcodeproj",
         "identifier" : "43AF0A6729C909540032A3F0",

@@ -8,6 +8,7 @@
 import SwiftUI
 import MapKit
 import CoreLocation
+import CoreMotion
 import Combine
 
 struct LocationData {
@@ -111,6 +112,8 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var currentLocation: CLLocation?
     private var timer: Timer?
     var authorizationStatusProvider: (() -> CLAuthorizationStatus)?
+    private let altimeter = CMAltimeter()
+    @Published var barometricAltitude: Double = 0.0
 
     var authorizationStatus: CLAuthorizationStatus {
         return authorizationStatusProvider?() ?? locationManager.authorizationStatus
@@ -124,6 +127,16 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.startUpdatingLocation()
         locationManager.startUpdatingHeading()
+        if CMAltimeter.isRelativeAltitudeAvailable() {
+            altimeter.startRelativeAltitudeUpdates(to: .main) { (altitudeData, error) in
+                guard let altitudeData = altitudeData else { return }
+                let altitudeInMeters = altitudeData.relativeAltitude.doubleValue
+                let altitudeInFeet = altitudeInMeters * 3.28084
+                DispatchQueue.main.async {
+                    self.barometricAltitude = altitudeInFeet
+                }
+            }
+        }
     }
     
     func startTimer(pollingRate: TimeInterval) {
@@ -287,6 +300,13 @@ struct LocationInfoView: View {
                     .font(.headline)
                 Spacer()
                 Text("\((locationViewModel.locationManager.location?.altitude ?? 0) * 3.28084, specifier: "%.2f") ft")
+                    .font(.body)
+            }
+            HStack {
+                Text("Barometric Altitude:")
+                    .font(.headline)
+                Spacer()
+                Text("\((locationViewModel.barometricAltitude), specifier: "%.2f") ft")
                     .font(.body)
             }
             HStack {

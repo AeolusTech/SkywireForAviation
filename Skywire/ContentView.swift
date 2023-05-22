@@ -10,12 +10,14 @@ import MapKit
 import CoreLocation
 import CoreMotion
 import Combine
+import WeatherKit
 
 struct LocationData {
     var timestamp: TimeInterval
     var latitude: CLLocationDegrees
     var longitude: CLLocationDegrees
     var altitude: CLLocationDistance
+    var baroAltitude: CLLocationDistance
     var heading: CLLocationDirection
 }
 
@@ -25,7 +27,7 @@ protocol NetworkSession {
 extension URLSession: NetworkSession { }
 
 class LocationDataRecorder {
-    private var csvHeader: String = "Timestamp,Latitude,Longitude,Altitude,Heading\n"
+    private var csvHeader: String = "Timestamp,Latitude,Longitude,Altitude,Barometric Altitude,Heading\n"
     private var csvData: String
     private var networkSession: NetworkSession
 
@@ -35,7 +37,7 @@ class LocationDataRecorder {
     }
 
     func saveLocationData(_ locationData: LocationData) {
-        let row = "\(locationData.timestamp),\(locationData.latitude),\(locationData.longitude),\(locationData.altitude),\(locationData.heading)\n"
+        let row = "\(locationData.timestamp),\(locationData.latitude),\(locationData.longitude),\(locationData.altitude),\(locationData.baroAltitude),\(locationData.heading)\n"
         csvData.append(row)
     }
 
@@ -76,9 +78,10 @@ class LocationDataRecorder {
                 if let error = error {
                     print("Error uploading file: \(error)")
                 } else if let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                    print("File uploaded successfully \(response)")
+                    let msg = "File saved and uploaded successfully"
+                    print("\(msg) \(response)")
                     DispatchQueue.main.async {
-                        self.showSuccessAlert()
+                        AlertUtility.showDisappearingAlert(title: "Success", message: msg)
                     }
                 } else {
                     print("Unexpected response: \(String(describing: response))")
@@ -89,21 +92,8 @@ class LocationDataRecorder {
             print("Error reading file data: \(error)")
         }
     }
-
-    private func showSuccessAlert() {
-        let alert = UIAlertController(title: "Success", message: "File saved and uploaded successfully", preferredStyle: .alert)
-
-        if let firstScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            if let rootViewController = firstScene.windows.first?.rootViewController {
-                rootViewController.present(alert, animated: true, completion: {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        alert.dismiss(animated: true, completion: nil)
-                    }
-                })
-            }
-        }
-    }
 }
+
 
 class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var locationManager = CLLocationManager()
@@ -114,6 +104,25 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     var authorizationStatusProvider: (() -> CLAuthorizationStatus)?
     private let altimeter = CMAltimeter()
     @Published var barometricAltitude: Double = 0.0
+    @State var weather: Weather?
+    
+    func getWeather() async {
+        do {
+            if let currentLocation = self.locationManager.location {
+                weather = try await Task.detached(priority: .userInitiated) {
+                    print("Got weather for current location)")
+                    return try await WeatherService().weather(for: currentLocation	)
+                }.value
+                print("Localised but still waiting on weather...")
+            }
+            else {
+                print("Cannot get weather because I don't have location")
+            }
+        } catch {
+            AlertUtility.showDisappearingAlert(title: "Fatal error", message: error.localizedDescription)
+            print("\(error)")
+        }
+    }
 
     var authorizationStatus: CLAuthorizationStatus {
         return authorizationStatusProvider?() ?? locationManager.authorizationStatus
@@ -177,6 +186,7 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                                             latitude: location.coordinate.latitude,
                                             longitude: location.coordinate.longitude,
                                             altitude: location.altitude,
+                                            baroAltitude: barometricAltitude,
                                             heading: currentHeading)
             locationDataRecorder.saveLocationData(locationData)
         }
@@ -278,6 +288,25 @@ struct ContentView: View {
 }
 
 struct LocationInfoView: View {
+    let location: CLLocation =
+    CLLocation(
+        latitude: .init(floatLiteral: 30),
+        longitude: .init(floatLiteral: 39)
+    )
+    
+    @State var weather: Weather?
+    
+    func getWeather() async {
+        do {
+            weather = try await Task.detached(priority: .userInitiated) {
+                return try await WeatherService.shared
+                    .weather(for: locationViewModel.locationManager.location ?? CLLocation())
+            }.value
+        } catch {
+            fatalError("\(error)")
+        }
+    }
+    
     @ObservedObject var locationViewModel: LocationViewModel
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -322,6 +351,21 @@ struct LocationInfoView: View {
                 Spacer()
                 Text("\(Int(locationViewModel.currentHeading))°")
                     .font(.body)
+            }
+            HStack {
+                Text("Current Pressure:")
+                    .font(.headline)
+                Spacer()
+                Group {
+                    if let weather = weather {
+                        Text("\(weather.currentWeather.pressure.value) hPa")
+                    } else {
+                        ProgressView()
+                            .task {
+                                await getWeather()
+                            }
+                    }
+                }
             }
         }
         .padding(.horizontal)

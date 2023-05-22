@@ -24,6 +24,8 @@
 		43AF0A8A29C9B1F40032A3F0 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A8929C9B1F40032A3F0 /* MainTabView.swift */; };
 		43AF0A8C29C9B32D0032A3F0 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A8B29C9B32D0032A3F0 /* ActivityView.swift */; };
 		43C704592A0D5E1000949280 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A5329C909520032A3F0 /* ContentView.swift */; };
+		43C7045F2A10F00600949280 /* WeatherKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C7045E2A10F00500949280 /* WeatherKit.framework */; };
+		43C704612A10F2BD00949280 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C704602A10F2BD00949280 /* Utils.swift */; };
 		43E92FC229E1832B009802CE /* RecordButtonUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E92FC129E1832B009802CE /* RecordButtonUITest.swift */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		431B49F52A115A6700B60C62 /* Skywire.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Skywire.entitlements; sourceTree = "<group>"; };
 		433ACF0829D2412700A3A0A1 /* AltitudeGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltitudeGraphView.swift; sourceTree = "<group>"; };
 		43859C1229C9F390009BB939 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		43AF0A4E29C909520032A3F0 /* Skywire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Skywire.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -61,6 +64,8 @@
 		43AF0A8729C9B1520032A3F0 /* RecordedFilesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordedFilesView.swift; sourceTree = "<group>"; };
 		43AF0A8929C9B1F40032A3F0 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		43AF0A8B29C9B32D0032A3F0 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
+		43C7045E2A10F00500949280 /* WeatherKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WeatherKit.framework; path = System/Library/Frameworks/WeatherKit.framework; sourceTree = SDKROOT; };
+		43C704602A10F2BD00949280 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		43E92FC029E17B5C009802CE /* Skywire.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Skywire.xctestplan; sourceTree = "<group>"; };
 		43E92FC129E1832B009802CE /* RecordButtonUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordButtonUITest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -71,6 +76,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				433ACF1229D2422F00A3A0A1 /* CoreLocation.framework in Frameworks */,
+				43C7045F2A10F00600949280 /* WeatherKit.framework in Frameworks */,
 				435055E029D262B700EEBEE5 /* Charts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -119,6 +125,7 @@
 		43AF0A5029C909520032A3F0 /* Skywire */ = {
 			isa = PBXGroup;
 			children = (
+				431B49F52A115A6700B60C62 /* Skywire.entitlements */,
 				43AF0A5129C909520032A3F0 /* SkywireApp.swift */,
 				43AF0A5329C909520032A3F0 /* ContentView.swift */,
 				43AF0A5529C909540032A3F0 /* Assets.xcassets */,
@@ -128,6 +135,7 @@
 				43AF0A8B29C9B32D0032A3F0 /* ActivityView.swift */,
 				43859C1229C9F390009BB939 /* SettingsView.swift */,
 				433ACF0829D2412700A3A0A1 /* AltitudeGraphView.swift */,
+				43C704602A10F2BD00949280 /* Utils.swift */,
 			);
 			path = Skywire;
 			sourceTree = "<group>";
@@ -161,6 +169,7 @@
 		43AF0A7B29C90A930032A3F0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				43C7045E2A10F00500949280 /* WeatherKit.framework */,
 				43AF0A7C29C90A930032A3F0 /* CoreLocation.framework */,
 			);
 			name = Frameworks;
@@ -309,6 +318,7 @@
 				43859C1329C9F390009BB939 /* SettingsView.swift in Sources */,
 				43AF0A8C29C9B32D0032A3F0 /* ActivityView.swift in Sources */,
 				43AF0A8A29C9B1F40032A3F0 /* MainTabView.swift in Sources */,
+				43C704612A10F2BD00949280 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,6 +476,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Skywire/Skywire.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Skywire/Preview Content\"";
@@ -487,7 +498,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.learning.Skywire;
+				PRODUCT_BUNDLE_IDENTIFIER = aero.skywire.SkywireForAviation.weather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -503,6 +514,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Skywire/Skywire.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Skywire/Preview Content\"";
@@ -524,7 +536,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.learning.Skywire;
+				PRODUCT_BUNDLE_IDENTIFIER = aero.skywire.SkywireForAviation.weather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

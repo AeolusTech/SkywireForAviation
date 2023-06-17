@@ -47,10 +47,16 @@ class SkywireUITests: XCTestCase {
         let altitudeLabel = app.staticTexts["Altitude:"]
         XCTAssert(altitudeLabel.exists)
 
+        let baroAltitudeLabel = app.staticTexts["Barometric Altitude:"]
+        XCTAssert(baroAltitudeLabel.exists)
+        
         let speedLabel = app.staticTexts["Speed:"]
         XCTAssert(speedLabel.exists)
 
         let magneticHeadingLabel = app.staticTexts["Magnetic Heading:"]
         XCTAssert(magneticHeadingLabel.exists)
+        
+        let currentPressureLabel = app.staticTexts["Current Pressure:"]
+        XCTAssert(currentPressureLabel.exists)
     }
 }

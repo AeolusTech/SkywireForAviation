@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		431ABF882A3DEB4A00DBA5F2 /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431ABF872A3DEB4A00DBA5F2 /* RecordButton.swift */; };
+		431ABF8A2A3DEBB300DBA5F2 /* LocationInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431ABF892A3DEBB300DBA5F2 /* LocationInfoView.swift */; };
+		431ABF8C2A3DED1C00DBA5F2 /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431ABF8B2A3DED1C00DBA5F2 /* LocationViewModel.swift */; };
+		431ABF8E2A3DEDCD00DBA5F2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431ABF8D2A3DEDCD00DBA5F2 /* MapView.swift */; };
+		431ABF902A3DEE6A00DBA5F2 /* LocationDataRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431ABF8F2A3DEE6A00DBA5F2 /* LocationDataRecorder.swift */; };
+		431ABF912A3DEFDC00DBA5F2 /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431ABF8B2A3DED1C00DBA5F2 /* LocationViewModel.swift */; };
+		431ABF922A3DEFED00DBA5F2 /* LocationDataRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431ABF8F2A3DEE6A00DBA5F2 /* LocationDataRecorder.swift */; };
 		433ACF0929D2412700A3A0A1 /* AltitudeGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433ACF0829D2412700A3A0A1 /* AltitudeGraphView.swift */; };
 		433ACF1229D2422F00A3A0A1 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AF0A7C29C90A930032A3F0 /* CoreLocation.framework */; };
 		435055E029D262B700EEBEE5 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 435055DF29D262B700EEBEE5 /* Charts */; };
@@ -23,7 +30,6 @@
 		43AF0A8829C9B1520032A3F0 /* RecordedFilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A8729C9B1520032A3F0 /* RecordedFilesView.swift */; };
 		43AF0A8A29C9B1F40032A3F0 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A8929C9B1F40032A3F0 /* MainTabView.swift */; };
 		43AF0A8C29C9B32D0032A3F0 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A8B29C9B32D0032A3F0 /* ActivityView.swift */; };
-		43C704592A0D5E1000949280 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A5329C909520032A3F0 /* ContentView.swift */; };
 		43C7045F2A10F00600949280 /* WeatherKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C7045E2A10F00500949280 /* WeatherKit.framework */; };
 		43C704612A10F2BD00949280 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C704602A10F2BD00949280 /* Utils.swift */; };
 		43E92FC229E1832B009802CE /* RecordButtonUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E92FC129E1832B009802CE /* RecordButtonUITest.swift */; };
@@ -47,6 +53,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		431ABF872A3DEB4A00DBA5F2 /* RecordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
+		431ABF892A3DEBB300DBA5F2 /* LocationInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInfoView.swift; sourceTree = "<group>"; };
+		431ABF8B2A3DED1C00DBA5F2 /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
+		431ABF8D2A3DEDCD00DBA5F2 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		431ABF8F2A3DEE6A00DBA5F2 /* LocationDataRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDataRecorder.swift; sourceTree = "<group>"; };
 		431B49F52A115A6700B60C62 /* Skywire.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Skywire.entitlements; sourceTree = "<group>"; };
 		433ACF0829D2412700A3A0A1 /* AltitudeGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AltitudeGraphView.swift; sourceTree = "<group>"; };
 		43859C1229C9F390009BB939 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -136,6 +147,11 @@
 				43859C1229C9F390009BB939 /* SettingsView.swift */,
 				433ACF0829D2412700A3A0A1 /* AltitudeGraphView.swift */,
 				43C704602A10F2BD00949280 /* Utils.swift */,
+				431ABF872A3DEB4A00DBA5F2 /* RecordButton.swift */,
+				431ABF892A3DEBB300DBA5F2 /* LocationInfoView.swift */,
+				431ABF8B2A3DED1C00DBA5F2 /* LocationViewModel.swift */,
+				431ABF8D2A3DEDCD00DBA5F2 /* MapView.swift */,
+				431ABF8F2A3DEE6A00DBA5F2 /* LocationDataRecorder.swift */,
 			);
 			path = Skywire;
 			sourceTree = "<group>";
@@ -312,11 +328,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				43AF0A8829C9B1520032A3F0 /* RecordedFilesView.swift in Sources */,
+				431ABF902A3DEE6A00DBA5F2 /* LocationDataRecorder.swift in Sources */,
+				431ABF8E2A3DEDCD00DBA5F2 /* MapView.swift in Sources */,
 				433ACF0929D2412700A3A0A1 /* AltitudeGraphView.swift in Sources */,
 				43AF0A5429C909520032A3F0 /* ContentView.swift in Sources */,
+				431ABF882A3DEB4A00DBA5F2 /* RecordButton.swift in Sources */,
 				43AF0A5229C909520032A3F0 /* SkywireApp.swift in Sources */,
+				431ABF8C2A3DED1C00DBA5F2 /* LocationViewModel.swift in Sources */,
 				43859C1329C9F390009BB939 /* SettingsView.swift in Sources */,
 				43AF0A8C29C9B32D0032A3F0 /* ActivityView.swift in Sources */,
+				431ABF8A2A3DEBB300DBA5F2 /* LocationInfoView.swift in Sources */,
 				43AF0A8A29C9B1F40032A3F0 /* MainTabView.swift in Sources */,
 				43C704612A10F2BD00949280 /* Utils.swift in Sources */,
 			);
@@ -334,7 +355,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43C704592A0D5E1000949280 /* ContentView.swift in Sources */,
+				431ABF922A3DEFED00DBA5F2 /* LocationDataRecorder.swift in Sources */,
+				431ABF912A3DEFDC00DBA5F2 /* LocationViewModel.swift in Sources */,
 				43AF0A6D29C909540032A3F0 /* SkywireUITests.swift in Sources */,
 				43E92FC229E1832B009802CE /* RecordButtonUITest.swift in Sources */,
 				43AF0A6F29C909540032A3F0 /* SkywireUITestsLaunchTests.swift in Sources */,

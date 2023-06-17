@@ -12,8 +12,6 @@
 		431ABF8C2A3DED1C00DBA5F2 /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431ABF8B2A3DED1C00DBA5F2 /* LocationViewModel.swift */; };
 		431ABF8E2A3DEDCD00DBA5F2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431ABF8D2A3DEDCD00DBA5F2 /* MapView.swift */; };
 		431ABF902A3DEE6A00DBA5F2 /* LocationDataRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431ABF8F2A3DEE6A00DBA5F2 /* LocationDataRecorder.swift */; };
-		431ABF912A3DEFDC00DBA5F2 /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431ABF8B2A3DED1C00DBA5F2 /* LocationViewModel.swift */; };
-		431ABF922A3DEFED00DBA5F2 /* LocationDataRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431ABF8F2A3DEE6A00DBA5F2 /* LocationDataRecorder.swift */; };
 		433ACF0929D2412700A3A0A1 /* AltitudeGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433ACF0829D2412700A3A0A1 /* AltitudeGraphView.swift */; };
 		433ACF1229D2422F00A3A0A1 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AF0A7C29C90A930032A3F0 /* CoreLocation.framework */; };
 		435055E029D262B700EEBEE5 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 435055DF29D262B700EEBEE5 /* Charts */; };
@@ -32,7 +30,6 @@
 		43AF0A8C29C9B32D0032A3F0 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A8B29C9B32D0032A3F0 /* ActivityView.swift */; };
 		43C7045F2A10F00600949280 /* WeatherKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C7045E2A10F00500949280 /* WeatherKit.framework */; };
 		43C704612A10F2BD00949280 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C704602A10F2BD00949280 /* Utils.swift */; };
-		43E92FC229E1832B009802CE /* RecordButtonUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E92FC129E1832B009802CE /* RecordButtonUITest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,7 +75,6 @@
 		43C7045E2A10F00500949280 /* WeatherKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WeatherKit.framework; path = System/Library/Frameworks/WeatherKit.framework; sourceTree = SDKROOT; };
 		43C704602A10F2BD00949280 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		43E92FC029E17B5C009802CE /* Skywire.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Skywire.xctestplan; sourceTree = "<group>"; };
-		43E92FC129E1832B009802CE /* RecordButtonUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordButtonUITest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,7 +173,6 @@
 			children = (
 				43AF0A6C29C909540032A3F0 /* SkywireUITests.swift */,
 				43AF0A6E29C909540032A3F0 /* SkywireUITestsLaunchTests.swift */,
-				43E92FC129E1832B009802CE /* RecordButtonUITest.swift */,
 			);
 			path = SkywireUITests;
 			sourceTree = "<group>";
@@ -355,10 +350,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				431ABF922A3DEFED00DBA5F2 /* LocationDataRecorder.swift in Sources */,
-				431ABF912A3DEFDC00DBA5F2 /* LocationViewModel.swift in Sources */,
 				43AF0A6D29C909540032A3F0 /* SkywireUITests.swift in Sources */,
-				43E92FC229E1832B009802CE /* RecordButtonUITest.swift in Sources */,
 				43AF0A6F29C909540032A3F0 /* SkywireUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

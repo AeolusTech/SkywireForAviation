@@ -30,6 +30,7 @@
 		43AF0A8C29C9B32D0032A3F0 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF0A8B29C9B32D0032A3F0 /* ActivityView.swift */; };
 		43C7045F2A10F00600949280 /* WeatherKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C7045E2A10F00500949280 /* WeatherKit.framework */; };
 		43C704612A10F2BD00949280 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C704602A10F2BD00949280 /* Utils.swift */; };
+		43C877072A82E2A80017EEE2 /* KalmanFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C877062A82E2A80017EEE2 /* KalmanFilter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		43AF0A8B29C9B32D0032A3F0 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		43C7045E2A10F00500949280 /* WeatherKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WeatherKit.framework; path = System/Library/Frameworks/WeatherKit.framework; sourceTree = SDKROOT; };
 		43C704602A10F2BD00949280 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		43C877062A82E2A80017EEE2 /* KalmanFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KalmanFilter.swift; sourceTree = "<group>"; };
 		43E92FC029E17B5C009802CE /* Skywire.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Skywire.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -148,6 +150,7 @@
 				431ABF8B2A3DED1C00DBA5F2 /* LocationViewModel.swift */,
 				431ABF8D2A3DEDCD00DBA5F2 /* MapView.swift */,
 				431ABF8F2A3DEE6A00DBA5F2 /* LocationDataRecorder.swift */,
+				43C877062A82E2A80017EEE2 /* KalmanFilter.swift */,
 			);
 			path = Skywire;
 			sourceTree = "<group>";
@@ -329,6 +332,7 @@
 				43AF0A5429C909520032A3F0 /* ContentView.swift in Sources */,
 				431ABF882A3DEB4A00DBA5F2 /* RecordButton.swift in Sources */,
 				43AF0A5229C909520032A3F0 /* SkywireApp.swift in Sources */,
+				43C877072A82E2A80017EEE2 /* KalmanFilter.swift in Sources */,
 				431ABF8C2A3DED1C00DBA5F2 /* LocationViewModel.swift in Sources */,
 				43859C1329C9F390009BB939 /* SettingsView.swift in Sources */,
 				43AF0A8C29C9B32D0032A3F0 /* ActivityView.swift in Sources */,

@@ -21,6 +21,8 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var barometricAltitude: Double = 0.0
     @State var weather: Weather?
     
+    private var kalmanFilter: KalmanFilter?
+
     func getWeather() async {
         do {
             if let currentLocation = self.locationManager.location {
@@ -45,9 +47,10 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     override init() {
         super.init()
+        
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers // for rough estimate
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.startUpdatingLocation()
         locationManager.startUpdatingHeading()
@@ -72,11 +75,24 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locationManagerDidChangeAuthorization(manager)
-        if let location = locations.last {
-            currentLocation = location
+
+        // Initialize Kalman filter with the rough estimate if it's the first time
+        if kalmanFilter == nil, let initialLocation = locations.first {
+            kalmanFilter = KalmanFilter(initialEstimate: initialLocation,
+                                        initialEstimateErrorCovariance: 1,
+                                        measurementErrorCovariance: 1,
+                                        processErrorCovariance: 0.01)
+            
+            // After getting the initial location, set the location manager for higher accuracy
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.startUpdatingLocation()
+        }
+        // Update the Kalman filter with new locations
+        else if let newLocation = locations.last, let filter = kalmanFilter {
+            filter.update(measurement: newLocation)
+            currentLocation = filter.estimate
         }
     }
-    
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         locationManagerDidChangeAuthorization(manager)

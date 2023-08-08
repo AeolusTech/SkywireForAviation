@@ -16,7 +16,7 @@ struct LocationInfoView: View {
         latitude: .init(floatLiteral: 30),
         longitude: .init(floatLiteral: 39)
     )
-    
+    @State private var weatherUpdateTimer: Timer? = nil
     @State var weather: Weather?
     
     func getWeather() async {
@@ -92,5 +92,20 @@ struct LocationInfoView: View {
             }
         }
         .padding(.horizontal)
+        .onAppear {
+            Task {
+                await getWeather()  // Initial fetch
+            }
+            
+            self.weatherUpdateTimer = Timer.scheduledTimer(withTimeInterval: 5 * 60, repeats: true) { _ in
+                Task {
+                    await getWeather()
+                }
+            }
+        }
+        .onDisappear {
+            self.weatherUpdateTimer?.invalidate()
+            self.weatherUpdateTimer = nil
+        }
     }
 }

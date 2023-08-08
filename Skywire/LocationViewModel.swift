@@ -18,6 +18,7 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     private var timer: Timer?
     var authorizationStatusProvider: (() -> CLAuthorizationStatus)?
     private let altimeter = CMAltimeter()
+    private var lastAltimeterUpdateTime: Date? = nil
     @Published var barometricAltitude: Double = 0.0
     @State var weather: Weather?
     
@@ -51,11 +52,19 @@ class LocationViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers // for rough estimate
+        locationManager.distanceFilter = 10.0  // in meters
+        locationManager.headingFilter = 10.0    // in degrees, adjust as necessary
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.startUpdatingLocation()
         locationManager.startUpdatingHeading()
         if CMAltimeter.isRelativeAltitudeAvailable() {
             altimeter.startRelativeAltitudeUpdates(to: .main) { (altitudeData, error) in
+                let currentTime = Date()
+                if let lastUpdate = self.lastAltimeterUpdateTime, currentTime.timeIntervalSince(lastUpdate) < 1 { // 1 second delay
+                    return
+                }
+                self.lastAltimeterUpdateTime = currentTime
+                
                 guard let altitudeData = altitudeData else { return }
                 let altitudeInMeters = altitudeData.relativeAltitude.doubleValue
                 let altitudeInFeet = altitudeInMeters * 3.28084
